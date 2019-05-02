@@ -1,0 +1,179 @@
+<div *ngIf="gledaSvojProfil; else greska">
+	<button id="dodajTim" class="btn btn-outline-dark button" (click)="otvoriPopupNoviTim()">{{"PROFILE_PAGE.ADD_TEAM" | translate}}</button>
+	<div class="table-responsive">
+		<table class="tabela tabela-hover table ">
+			<thead>
+				<th style="width: 70%">{{"TEAM" | translate}}</th>
+				<th>{{"GAME" | translate}}</th>
+				<th></th>
+				<th></th>
+			</thead>
+			<tbody *ngIf="timovi.length!=0">
+				<tr *ngFor="let tim of timovi">
+					<td (click)='otvoriPopup(tim)'>{{tim.naziv}}</td>
+					<td (click)='otvoriPopup(tim)'>{{tim.nazivIgre}}</td>
+					<td>
+						<button type="button" class="button buttonDark btn-dark-outline" data-toggle="modal" data-target="#modalStatistika" (click)="prikaziStatistiku(tim.ID)">
+							{{ "PROFILE_PAGE.STATISTICS.BUTTON" | translate }}
+						</button>
+					</td>
+					<td>
+						<button type="button" class="close" data-toggle="modal" data-target="#modalBrisanjeTima" (click)="otvoriPopUpZaBrisanje(tim.ID)">
+							<img width="40px" height="30px" src='../../../../assets/images/if_25_2135797.png'>
+						</button>
+					</td>
+				</tr>
+			</tbody>
+
+			<tbody *ngIf="timovi.length==0">
+				<tr>
+					<td class="text-center" colspan="4">{{"PROFILE_PAGE.NO_TEAMS"|translate}}</td>
+
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<!--modal sa prikazom statististike tima-->
+	<div class="modal fade" id="modalStatistika" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modalNaslov">{{nazivTimaZaStatistiku}}</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<canvas *ngIf="statistikaTima" style="max-width: 100%" baseChart [data]="statistikaTima" [labels]="statistikaLabele" [colors]="bojeGrafika" [chartType]="doughnutChartType"></canvas>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">{{"CLOSE" | translate}}</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="porukaOBrisanjuTima" class="alert alert-dismissible collapse" style="display: none;">
+		<button type="button" class="close" (click)="sakrijAlert('porukaOBrisanjuTima');">&times;</button>
+		{{porukaOBrisanjuTima | translate}}
+	</div>
+
+	<div class="modal fade" id="modalBrisanjeTima" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					{{"PROFILE_PAGE.DELETE_TEAM_HEADER" | translate}}
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					{{"PROFILE_PAGE.DELETE_TEAM" | translate}}
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal" (click)="obrisiTim()">{{"YES" | translate}}</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">{{"CLOSE" | translate}}</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--
+<div class="part">
+	<div class="diamond">
+		<div class="dia">
+			<img src="../../../assets/images/aaa.png" alt="" width="320" height="316" />
+		</div>
+	</div>
+</div>
+-->
+	<!-- Modal sa prikazom detalja tima -->
+	<div class="modal fade" id="Form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 *ngIf="kliknutiTim" class="modal-title" id="exampleModalLabel">{{"TEAM" | translate}}: {{kliknutiTim.naziv}}</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<img *ngIf="kliknutiTim" id="grb" class="img-thumbnail" src="{{kliknutiTim.grb}}">
+					<div class="table-responsive">
+						<table class="tabela table">
+							<thead>
+								<th>{{"PROFILE_PAGE.BOT_NAME_HEADER" | translate}}</th>
+								<th>{{"PROFILE_PAGE.RANK_POINTS_HEADER" | translate}}</th>
+							</thead>
+							<tbody *ngIf="botovi">
+								<tr *ngFor="let bot of botovi">
+									<td>{{bot.naziv}}</td>
+									<td>{{bot.rankPoeni}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div id="porukaOBrisanjuBota" class="mt-2 alert alert-dismissible collapse" style="display: none;">
+						<button type="button" class="close" (click)="sakrijAlert('porukaOBrisanjuBota');">&times;</button>
+						{{porukaOBrisanjuBota | translate}}
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="button btn-outline-dark" data-dismiss="modal">{{"CLOSE" | translate}}</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal za novi tim -->
+	<div class="modal fade" id="FormDodajTim" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">{{"PROFILE_PAGE.NEW_TEAM" | translate}}</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="ocistiModalZaDodavanjeTima()">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form (submit)="dodajTim()" method="post">
+					<div class="modal-body">
+						<input id="nazivTima" class="form-control w-100" type="text" name="nazivTima" placeholder="{{'PROFILE_PAGE.TEAM_NAME' | translate}}" [(ngModel)]="nazivNovogTima" />
+						<select id="izborIgre" class="custom-select" (change)="odaberiIgru()">
+							<option value="-1" selected style="display: none;">{{"PROFILE_PAGE.SELECT_GAME" | translate}}</option>
+							<option *ngFor="let igra of igre" value="{{igra.ID}}">{{igra.naziv}}</option>
+						</select>
+						<label class='upload' for="uploadSlike">
+							<div id="centarUploada">
+								<img id="uploadSlika" src="{{uploadSlika}}" />
+								<p id="uploadText">{{"PROFILE_PAGE.UPLOAD_TEAM_PHOTO" | translate}}</p>
+							</div>
+						</label>
+						<input id="uploadSlike" type="file" name="myPhoto" (change)="prikaziUploadovanuSliku()" style="display: none;" accept="image/png, image/jpeg" />
+						<div *ngIf="izabranaIgra">
+							<p>{{"PROFILE_PAGE.CHOOSE_BOTS" | translate}} {{izabranaIgra.minBrojIgracaUTimu}} {{"AND" | translate}} {{izabranaIgra.maxBrojIgracaUTimu}}</p>
+							<div class="checkboxDiv" *ngFor="let bot of botoviIgre">
+								<label [attr.for]="'bot' + bot.ID">
+									<input (change)="selektovanjeBotaZaNoviTim(bot.ID)" [attr.id]="'bot' + bot.ID" class="botoviZaNoviTim" type="checkbox" [attr.value]="bot.ID" style="display: none;">
+									<span>{{bot.naziv}}</span>
+									<i class="fas fa-check"></i>
+								</label>
+							</div>
+						</div>
+						<div style="clear: both;"></div>
+						<div id="porukaODodavanjuTima" class="mt-2 alert alert-dismissible collapse" style="display: none;">
+							<button type="button" class="close" (click)="sakrijAlert('porukaODodavanjuTima');">&times;</button>
+							{{porukaODodavanjuTima | translate}}
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-secondary">{{"PROFILE_PAGE.ADD_TEAM" | translate}}</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<ng-template #greska>
+	<h2>{{"PROFILE_PAGE.ERROR.CAN_NOT_ACCESS" | translate}}</h2>
+</ng-template>

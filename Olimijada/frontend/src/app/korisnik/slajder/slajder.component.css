@@ -1,0 +1,15 @@
+#carouselGames {
+	margin-top: 30px;
+}
+
+.carousel-caption {
+	width: 100%;
+	left: 0;
+	overflow: hidden;
+	background-color: rgba(0, 0, 0, 0.6);
+}
+
+.carousel-caption a {
+	text-decoration: none;
+	color: white;
+}

@@ -1,0 +1,232 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+/* Font za Olimijadu */
+
+@font-face {
+	font-family: 'BigNoodleTitling';
+	/* src: url('assets/fonts/big_noodle_titling.ttf'); */
+	src: url('assets/fonts/YanoneKaffeesatz-Regular.otf');
+}
+
+/* Font za ostatak */
+
+@font-face {
+	font-family: 'TexGyreAdventor regular';
+	src: url('assets/fonts/texgyreadventor-regular.otf');
+}
+
+body, form, input, p {
+	color: white;
+	font-family: 'TexGyreAdventor regular';
+	font-size: 18px;
+}
+
+input {
+	color: black;
+	font-family: 'TexGyreAdventor regular';
+}
+
+input, button, button:focus {
+	outline: none;
+}
+
+.button, .button:disabled, .btn-outline-dark:disabled {
+	color: white;
+	font-family: 'TexGyreAdventor regular';
+	border-radius: 10px;
+	background-color: rgba(255, 255, 255, 0.2);
+	border: 0;
+	padding: 10px;
+	min-width: 150px;
+	cursor: pointer;
+}
+
+.button:disabled:hover {
+	cursor: not-allowed;
+}
+
+.buttonDark {
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.button:hover {
+	cursor: pointer;
+}
+
+.textInput {
+	background-color: lightgray;
+	border-radius: 10px;
+	width: 250px;
+	padding: 10px;
+	-webkit-box-sizing: border-box;
+	/* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;
+	/* Firefox, other Gecko */
+	box-sizing: border-box;
+}
+
+.tabela, .tabela tr, .tabela td, .tabela th {
+	border: 0;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.card, .tabela {
+	color: black;
+}
+
+.tabela thead, .naslovTabele {
+	background-color: rgba(78, 69, 124, 0.9);
+	color: white;
+}
+
+.tabela td, .tabela th {
+	/*padding: 10%;*/
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.naslovTabele {
+	margin: 0;
+	padding: 15px;
+	text-align: center;
+}
+
+.tabela tr:nth-child(odd) {
+	background-color: white;
+}
+
+.tabela tr:nth-child(even) {
+	background-color: #CEC9E2;
+}
+
+.tabela-hover tr:hover {
+	background-color: rgba(166, 153, 228, 0.836);
+	cursor: pointer;
+}
+
+.bezHovera {
+	background-color: white !important;
+}
+
+.bezHovera:hover {
+	background-color: white !important;
+	cursor: auto !important;
+}
+
+.opis {
+	font-size: 50px;
+	font-family: "BigNoodleTitling";
+}
+
+.modal-content {
+	background-color: rgba(50, 45, 62, 1);
+	color: white;
+}
+
+.modal-body {
+	color: white;
+}
+
+.modal-header .close {
+	color: #fff;
+	opacity: 0.7;
+}
+
+.modal-header .close:hover {
+	color: #fff;
+	opacity: 1;
+}
+
+.modal-header, .modal-footer {
+	background-color: rgba(50, 45, 62, 1);
+}
+
+.diamond, .dia {
+	margin-top: 10px;
+	transform-origin: 50% 50%;
+	overflow: hidden;
+	width: 160px;
+	height: 160px;
+	border-radius: 10px;
+}
+
+.diamond {
+	transform: rotate(45deg) translateY(-25px) translateX(-25px);
+}
+
+.diamond .dia {
+	width: 240px;
+	height: 240px;
+	transform: rotate(-45deg);
+}
+
+.diamond img {
+	margin: auto;
+	width: 100%;
+	height: auto;
+}
+
+/* Scrollbar */
+
+::-webkit-scrollbar {
+	width: 15px;
+}
+
+::-webkit-scrollbar-track {
+	background: #b8b8b8;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: #555;
+}
+
+/* animacija za profilnu stranu, za promenu profilne slike */
+
+.fade-in {
+	animation: fadeIn 2s;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+.fade-out {
+	animation: fadeOut 2s;
+}
+
+/*mozda za responsive tabele*/
+.w-auto{
+	width: auto;
+}
+
+@keyframes fadeOut {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
+}
+
+input[type='number'] {
+    -moz-appearance:textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}

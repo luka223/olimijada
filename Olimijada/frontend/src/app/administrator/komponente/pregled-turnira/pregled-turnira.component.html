@@ -1,0 +1,66 @@
+<div class="p-3">
+	<h3 class="opis text-center">{{"TOURNAMENTS" | translate}}</h3>
+	<button class="button btn-outline-dark" (click)="postaviFormuZaDodavanjeTurnira()">{{"ADMIN_MENU.ADD_TOURNAMENT"|translate}}</button>
+	<button class="button btn-outline-dark mb-2" (click)="postaviTabeluTurnira()">{{"ADMIN_PAGE.TOURNAMENT_LIST" | translate}}</button>
+	<div *ngIf="!dodavanjeTurnira; else formaZaDodavanjeTurnira" class="table-responsive">
+		<table class="tabela tabela-hover table">
+			<thead>
+				<th>{{"PROFILE_PAGE.TOURNAMENT.TOUR_NAME" | translate}}</th>
+				<th>{{"GAME" | translate}}</th>
+				<th>{{"PROFILE_PAGE.TOURNAMENT.DATE_START" | translate}}</th>
+				<th colspan="2">{{"ADMIN_PAGE.TEAMS_APPLIED" | translate }}</th>
+			</thead>
+			<tbody *ngIf="turniri?.length > 0; else nemaTurnira">
+				<tr *ngFor="let turnir of turniri">
+					<td>{{turnir.naziv}}</td>
+					<td>{{turnir.nazivIgre}}</td>
+					<td>{{turnir.datumPocetka | date: 'dd.MM.yyyy HH:mm' }}</td>
+					<td>{{turnir.ucesnici.length}}</td>
+					<!-- <td>
+						<button type="button" class="close" aria-label="Close" data-toggle="modal" data-target="#modalZaIzmenuTurnira">
+							<img height="30px" src='assets/images/edit.png'>
+						</button>
+					</td> -->
+					<td>
+						<button type="button" class="close" aria-label="Close" (click)="obrisiTurnir(turnir._id)">
+							<img height="30px" src='assets/images/if_25_2135797.png'>
+						</button>
+					</td>
+				</tr>
+			</tbody>
+			<ng-template #nemaTurnira>
+				<tr class="bezHovera">
+					<td colspan="5" class="text-center">{{"NO_TOURNAMENTS" | translate}}</td>
+				</tr>
+			</ng-template>
+		</table>
+		<div id="porukaOBrisanjuTurnira" class="alert alert-dismissible collapse mt-2" style="display: none;">
+			<button type="button" class="close" (click)="sakrijAlert();">&times;</button>
+			{{porukaOBrisanjuTurnira | translate}}
+		</div>
+	</div>
+	<ng-template #formaZaDodavanjeTurnira>
+		<app-lige-turniri></app-lige-turniri>
+	</ng-template>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalZaIzmenuTurnira" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				...
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="button btn-outline-dark" data-dismiss="modal">{{"CLOSE" | translate}}</button>
+				<button type="button" class="button btn-outline-dark">{{"SAVE" | translate}}</button>
+			</div>
+		</div>
+	</div>
+</div>

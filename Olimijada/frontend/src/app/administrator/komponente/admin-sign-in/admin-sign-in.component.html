@@ -1,0 +1,21 @@
+<div class="backgroundDiv2" ></div>
+
+<form (submit)="adminSignIn()" style="margin-top: 10%;text-align: center;">
+
+	<div>
+		<label for="username">{{"HOMEPAGE.LOGIN.USERNAME" | translate}}</label>
+		<br>
+		<img src="assets/images/account_icon.png" alt="slicica">
+		<input id="usernameAdmin" class="textInput" type="text" name="username" [(ngModel)]="usernameAdmin" />
+	</div>
+	<div>
+		<label for="pwd">{{"HOMEPAGE.LOGIN.PASSWORD" | translate}}</label>
+		<br>
+		<img src="assets/images/password_icon.png" alt="slicica">
+		<input id="pwdAdmin" class="textInput" type="password" name="passwordAdmin" [(ngModel)]="passwordAdmin" />
+	</div>
+	<button class="button btn-outline-dark" type="submit">{{"HOMEPAGE.LOGIN.SIGN_IN" | translate}}</button>
+
+	<h4>{{poruka|translate}}</h4>
+
+</form>

@@ -1,0 +1,80 @@
+<form (submit)="dodajTurnir()">
+	<div class="row">
+		<div class="col-sm">
+			<div class="form-group">
+				<label for="naziv" class=" control-label"> {{"ADMIN_PAGE.NAME" | translate}} (*)</label>
+				<div>
+					<input type="text" class="form-control" [(ngModel)]="naziv" name="naziv" id="naziv" required>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class=" control-label" for="selecttournament">{{"ADMIN_PAGE.COMPETITION_TYPE" | translate}} (*)</label>
+				<div>
+					<select *ngIf="tipoviTurnira" class="custom-select" id="selecttournament" name="selecttournament" [(ngModel)]="idTipaTurnira" required>
+						<option *ngFor="let item of tipoviTurnira" value="{{item.ID}}">{{item.tip}}</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class=" control-label" for="selectgame">{{"ADMIN_PAGE.CHOOSE_GAME" | translate}} (*)</label>
+				<div>
+					<select class="custom-select" id="igra" name="idIgre" [(ngModel)]="idIgre" required>
+						<option *ngFor="let item of sveIgre" [value]="item.ID">{{item.naziv}}</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class=" control-label" for="selectnumber">{{"ADMIN_PAGE.TEAM_NUMBER" | translate}} (*)</label>
+				<div>
+					<select *ngIf="idTipaTurnira == 1; else drugo;" class="custom-select" id="selectnumber" name="selectnumber" [(ngModel)]="brojTimova" required>
+						<option *ngFor="let broj of brojTimovaLiga" value="{{broj}}">{{broj}}</option>
+					</select>
+					<ng-template #drugo>
+						<select class="custom-select" id="selectnumber" name="selectnumber" [(ngModel)]="brojTimova" required>
+							<option *ngFor="let broj of brojTimovaKup" value="{{broj}}">{{broj}}</option>
+						</select>
+					</ng-template>
+
+				</div>
+			</div>
+		</div>
+		<div class="col-sm">
+			<div class="form-group">
+				<label for="pocetak" class="col"> {{"ADMIN_PAGE.START" | translate}} (*)</label>
+				<div class="input-group">
+					<input type="date" class="form-control col-8" [(ngModel)]="datumPocetak" name="pocetak" id="pocetak" required (change)="proveriDatum()">&nbsp;
+					<input type="time" class="form-control col-4" [(ngModel)]="vremePocetak" name="vremePocetak" id="vremePocetak" required (blur)="proveriVreme()">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="minRang" class=" control-label"> {{"ADMIN_PAGE.MIN_RANG" | translate}} (*)</label>
+				<br>
+				<div class="input-group  ">
+					<input type="number" [(ngModel)]="minRang" name="minRang" id="minRang" class="form-control" required />
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="maxRang" class=" control-label"> {{"ADMIN_PAGE.MAX_RANG" | translate}} (*)</label>
+				<br>
+				<div class="input-group  ">
+					<input type="number" [(ngModel)]="maxRang" name="maxRang" id="maxRang" class="form-control" [ngModelOptions]="{ updateOn: 'change'}" required />
+				</div>
+			</div>
+			<div>
+				<button class="button btn-outline-dark" type="submit" id="prijavi" name="prijavi">{{"ADMIN_PAGE.CREATE" | translate}}</button>
+			</div>
+
+			<div class="col-md-4 mt-2">
+				<div id="poruka" class="alert alert-dismissible collapse" style="display: none;">
+					<button type="button" class="close" (click)="sakrijAlert();">&times;</button>
+					{{poruka | translate}}
+				</div>
+			</div>
+		</div>
+	</div>
+</form>

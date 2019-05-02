@@ -1,0 +1,65 @@
+<div *ngIf="prikazTesta==false">
+	<div style="background: rgba(78, 69, 124, 0.9);">
+		<h1 class="text-center">{{"PROFILE_PAGE.TEST_TEAM.TEST_TEAMS"|translate}}</h1>
+		<div id="divSaSelectom" *ngIf="noTeamBoolean==true" style="background-color: white; text-align: left;">
+			<!-- <h5 style="color: rgba(78, 69, 124, 0.9);">{{"CHOOSE_TEAM"|translate}}</h5> -->
+			<select (change)="pokupiTim()" class="custom-select" id="izaberiTimzaTestiranje" [ngClass]="(izaberiProtivnickiTimBoolean == false)? 'nijeIzabran': 'izabranJe'">
+				<option selected style="display: none">{{"CHOOSE_TEAM"|translate}}</option>
+				<option *ngFor="let tim of timoviKorisnika" value="{{tim.idTima}}">{{tim.naziv}}, {{"GAME:"|translate}} {{tim.nazivIgre}}</option>
+			</select>
+			<!-- <div style="background-color: white;text-align: center; margin-bottom: 5px;" [ngClass]="(izaberiProtivnickiTimBoolean == false)? 'nijeIzabran2': 'izabranJe2'"> -->
+			<!-- <h5 style="color: rgba(78, 69, 124, 0.9);">{{izaberiProtivnickiTim|translate}}</h5> -->
+			<select (change)="testiraj()" class="custom-select" id="izaberiProtivnika" [ngClass]="(izaberiProtivnickiTimBoolean == false)? 'nijeIzabran2': 'izabranJe2'">
+
+				<option selected style="display: none">{{izaberiProtivnickiTim|translate}}</option>
+				<option *ngFor="let tim of timoviProtivnika" value="{{tim.idTima}}">{{tim.naziv}}</option>
+			</select>
+		</div>
+		<div *ngIf="noTeamBoolean==false" style="text-align: center;">
+
+			<h5 style="background-color: white;color: black;">{{"NO_TEAMS"|translate}}</h5>
+		</div>
+
+	</div>
+</div>
+
+<div *ngIf="prikazTesta==true">
+
+	<div class="row scoreboard p-3">
+		<div class="col-auto prviGrb">
+			<img [src]="grbTima1" alt="Grb">
+		</div>
+		<div class="col-sm text-center">
+			<!-- Mali i veliki ekran sluze da se ime prikaze
+					iznad/ispod grba u zavisnosti od velicine ekrana -->
+			<div class="maliEkran">{{nazivPrvogTima}}</div>
+			<div class="rezultat p-3">{{poeniTima1}}</div>
+			<div class="velikiEkran">{{nazivPrvogTima}}</div>
+		</div>
+		<div class="col-sm text-center">
+			<div class="rezultat p-3">{{poeniTima2}}</div>
+			<div>{{nazivDrugogTima}}</div>
+		</div>
+		<div class="col-auto drugiGrb">
+			<img [src]="grbTima2" alt="Grb">
+		</div>
+	</div>
+
+	<!-- <div class="opis" style="text-align: center; background-color: white;color:dodgerblue;">
+		<img *ngIf="grbTima1" src="{{grbTima1}}" alt="" style="max-width: 10%; max-height:10%;">{{nazivPrvogTima}}
+		<span style="color:maroon">{{rezultat}}</span>{{nazivDrugogTima}}
+		<img *ngIf="grbTima2" src="{{grbTima2}}" style="max-width: 10%; max-height:10%;" alt="">
+	</div> -->
+	<div style="display: none;text-align: center;float:center;" id="kraj">
+		<h1>{{kraj|translate}} {{saveTim}}</h1>
+	</div>
+	<div style="float:right;">
+		<button type="button" (click)="back();" class="button btn-outline-dark mt-2 mb-2">{{"PROFILE_PAGE.TEST_TEAM.TEST_ANOTHER_TEAM"|translate}}</button>
+		<br>
+	</div>
+
+
+
+</div>
+
+<canvas (window:resize)="onResize($event)" width="2000px" height="1000px" style="display: none; max-width: 100%; max-height: 100%; " id="demoCanvas"></canvas>

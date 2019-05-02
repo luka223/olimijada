@@ -1,0 +1,85 @@
+<div *ngIf="korisnikService.activate==undefined">
+	<form method="post" (submit)="ulogujSe()">
+		<div>
+			<label for="username">{{"HOMEPAGE.LOGIN.USERNAME" | translate}}</label>
+			<br>
+			<img src="assets/images/account_icon.png" alt="slicica">
+			<input id="username" class="textInput" type="text" name="username" [(ngModel)]="username" />
+		</div>
+		<div>
+			<label for="pwd1">{{"HOMEPAGE.LOGIN.PASSWORD" | translate}}</label>
+			<br>
+			<img src="assets/images/password_icon.png" alt="slicica">
+			<input id="pwd1" class="textInput" type="password" name="password" [(ngModel)]="password" />
+		</div>
+		<button class="button btn-outline-dark" type="submit">{{"HOMEPAGE.LOGIN.SIGN_IN" | translate}}</button>
+		<p>{{"HOMEPAGE.LOGIN.NO_ACCOUNT" | translate}}
+			<a [routerLink]="['signup']">{{"HOMEPAGE.LOGIN.SIGN_UP" | translate}}</a>
+
+		</p>
+		<h4>{{poruka|translate}}</h4>
+	</form>
+</div>
+
+<button *ngIf="zaboravljenaSifraBoolean==false" type="button" class="btn btn-link" style="font-size: 12pt" (click)="popuniHtml()">{{"HOMEPAGE.LOGIN.FORGOT_PASSWORD"|translate}}</button>
+
+<div *ngIf="zaboravljenaSifraBoolean==true">
+	<div *ngIf="mailSendInput==false">
+		<label for="pwd2">{{"HOMEPAGE.LOGIN.EMAIL" | translate}}</label>
+		<br>
+		<img src="assets/images/mail_icon.png" alt="slicica">
+		<input (change)="emailCheck()" id="pwd2" class="textInput" type="email" name="email" [(ngModel)]="email" />
+		<br>
+		<button style="margin-left: 2%" (click)="sendMail()" type="button" class="button btn-outline-dark">{{"HOMEPAGE.SEND_CODE"|translate}}</button>
+		<br> {{greska|translate}}
+		<br> {{email_check|translate}}
+	</div>
+
+	<div *ngIf="mailSendInput==true">
+		<div *ngIf="end==false">
+			<h3>{{"HOMEPAGE.LOGIN.FORGOT_PASSWORD"|translate}}</h3>
+			<div>
+				<label for="pwd3">{{"HOMEPAGE.CODE" | translate}}</label>
+				<br>
+				<img src="assets/images/hashtag.png" alt="slicica">
+				<input (change)="codeCheck()" id="pwd" class="textInput" type="text" name="codeInput" [(ngModel)]="codeInput" />
+			</div>
+			<br>{{code_msg|translate}}
+			<div>
+				<label for="pwd2">{{"HOMEPAGE.LOGIN.PASSWORD" | translate}}</label>
+				<br>
+				<img src="assets/images/password_icon.png" alt="slicica">
+				<input (change)="passwordCheck()" id="pwd1" class="textInput" type="password" name="password" [(ngModel)]="password1" />
+			</div>
+
+			<br> {{password_check|translate}}
+			<div>
+
+				<label for="pwd1">{{"HOMEPAGE.LOGIN.CONFIRM_PASSWORD" | translate}}</label>
+				<br>
+				<img src="assets/images/password_icon.png" alt="slicica">
+				<input (change)="passwordCheck1()" id="pwd2" class="textInput" type="password" name="password" [(ngModel)]="password2" />
+			</div>
+
+
+			<br>{{same_pass|translate}}
+
+			<button type="button" class="button btn-outline-dark" (click)="Promeni()">{{"HOMEPAGE.CHANGE_PASSWORD"|translate}}</button>
+
+		</div>
+	</div>
+	<div>
+		<h4>{{end_promenjena|translate}}</h4>
+	</div>
+
+
+</div>
+
+
+<div *ngIf="korisnikService.activate==false">
+
+	<h4>{{"HOMEPAGE.SEND_EMAIL"|translate}}</h4>
+	<button (click)="resendMail()" type="button" class="button btn-outline-dark">
+		{{"HOMEPAGE.RESEND_EMAIL"|translate}}
+	</button>
+</div>

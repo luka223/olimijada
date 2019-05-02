@@ -1,0 +1,98 @@
+<form #frm="ngForm" (ngSubmit)="dodajIgru(frm)">
+	<div class="row">
+		<div class="col-sm">
+			<div class="form-group">
+				<label for="naziv" class=" control-label"> {{"ADMIN_PAGE.GAME_NAME" | translate}} (*)</label>
+				<div>
+					<input type="text" class="form-control" [(ngModel)]="naziv" name="naziv" id="naziv" required>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="minBrojTimova" class=" control-label"> {{"ADMIN_PAGE.MIN_TEAMS" | translate}} (*)</label>
+				<div>
+					<input type="number" class="form-control" [(ngModel)]="minBrojTimova" name="minBrojTimova" id="minBrojTimova" required>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="maxBrojTimova" class=" control-label"> {{"ADMIN_PAGE.MAX_TEAMS" | translate}} (*)</label>
+				<div>
+					<input type="number" class="form-control" [(ngModel)]="maxBrojTimova" name="maxBrojTimova" id="maxBrojTimova" required>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="opis" class=" control-label"> {{"ADMIN_PAGE.DESCRIPTION_SR" | translate}} (*)</label>
+				<div>
+					<textarea rows="4" cols="50" class="form-control" [(ngModel)]="opis" name="opis" id="opis" required></textarea>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="description" class=" control-label"> {{"ADMIN_PAGE.DESCRIPTION_EN" | translate}} (*)</label>
+				<div>
+					<textarea rows="4" cols="50" class="form-control" [(ngModel)]="description" name="description" id="description" required></textarea>
+				</div>
+			</div>
+
+			<div class="form-group ">
+				<label class='upload' for="uploadSlike">
+					<div class="centarUploada">
+						<img id="uploadSlika" src="{{uploadSlika}}" />
+						<p id="uploadText">{{"ADMIN_PAGE.IMG_UPLOAD" | translate}}</p>
+					</div>
+				</label>
+				<input id="uploadSlike" type="file" name="myPhoto" (change)="prikaziUploadovanuSliku($event)" style="display: none;" />
+			</div>
+		</div>
+		<div class="col-sm">
+			<div class="form-group ">
+				<label class='upload' for="uploadIkone">
+					<div class="centarUploada">
+						<img id="uploadIkona" src="{{uploadIkona}}" />
+						<p id="uploadIkonaText">{{"ADMIN_PAGE.ICON_UPLOAD" | translate}}</p>
+					</div>
+				</label>
+				<input id="uploadIkone" type="file" name="myPhoto" (change)="prikaziUploadovanuIkonu($event)" style="display: none;" />
+			</div>
+
+			<div class="form-group ">
+				<label class='upload' for="uploadPozadine">
+					<div class="centarUploada">
+						<img id="uploadPozadina" src="{{uploadPozadina}}" />
+						<p id="uploadPozadinaText">{{"ADMIN_PAGE.BACK_UPLOAD" | translate}}</p>
+					</div>
+				</label>
+				<input id="uploadPozadine" type="file" name="myPhoto" (change)="prikaziUploadovanuPozadinu($event)" style="display: none;" />
+			</div>
+
+			<div class="form-group">
+				<label for="minBrojIgraca" class=" control-label"> {{"ADMIN_PAGE.MIN_PLAYERS" | translate}} (*)</label>
+				<div>
+					<input type="number" class="form-control" [(ngModel)]="minBrojIgraca" name="minBrojIgraca" id="minBrojIgraca" required>
+					<div *ngIf="greskaIgraci" class="alert alert-danger ">
+						{{"ADMIN_PAGE.MAX_PLAYERS_FAIL" | translate}}
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="maxBrojIgraca" class=" control-label"> {{"ADMIN_PAGE.MAX_PLAYERS" | translate}} (*)</label>
+				<div>
+					<input type="number" class="form-control" [(ngModel)]="maxBrojIgraca" name="maxBrojIgraca" id="maxBrojIgraca" required>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div>
+					<button type="submit" id="prijavi" name="prijavi" class="button btn-outline-dark">{{"ADMIN_PAGE.ADD_GAME" | translate}}</button>
+					<div id="poruka" class="alert alert-dismissible collapse mt-2" style="display: none;">
+						<button type="button" class="close" (click)="sakrijAlert();">&times;</button>
+						{{poruka | translate}}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>

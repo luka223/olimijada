@@ -1,0 +1,128 @@
+<div class="w-100" style="margin-top: 10px;">
+	<div *ngIf="gledaSvojProfil; else posetilac">
+		<app-botovi></app-botovi>
+		<app-timovi></app-timovi>
+		<app-test-tima></app-test-tima>
+		<div class="table-responsive mt-3">
+			<h3 class="naslovTabele">{{"PROFILE_PAGE.TOURNAMENT.PARTICIPATING" | translate}}</h3>
+			<table class="tabela tabela-hover table">
+				<thead>
+					<th style="width: 30%">{{"PROFILE_PAGE.TOURNAMENT.TOUR_NAME" | translate}}</th>
+					<th style="width: 25%">{{"PROFILE_PAGE.TOURNAMENT.DATE_START" | translate}}</th>
+					<th style="width: 25%">{{"GAME_PAGE.TOURNAMENT.FINISHED" | translate}}</th>
+					<th style="width: 20%">{{"TEAM" | translate }}</th>
+				</thead>
+				<tbody>
+					<tr *ngFor="let turnir of turniri" [routerLink]="['/turnir/', turnir.ID]">
+						<td>{{turnir.naziv}}</td>
+						<td>{{turnir.datumPocetka | date: 'dd.MM.yyyy HH:mm' }}</td>
+						<td *ngIf="turnir.zavrsen">{{"YES" | translate}}</td>
+						<td *ngIf="!turnir.zavrsen">{{"NO" | translate}}</td>
+						<td>{{turnir.tim.nazivTima}}</td>
+					</tr>
+					<tr class="bezHovera" *ngIf="turniri && turniri.length == 0">
+						<td class="text-center" colspan="5">{{"PROFILE_PAGE.TOURNAMENT.EMPTY" | translate}}</td>
+						
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<ng-template #posetilac>
+		<div class="table-responsive">
+			<table class="tabela table">
+				<thead>
+					<th>Bot</th>
+					<th>{{"RANK_POINTS" | translate}}</th>
+				</thead>
+				<tbody>
+					<tr *ngFor="let bot of botovi">
+						<td style="width: 75%">{{bot.naziv}}</td>
+						<td>{{bot.rankPoeni}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="table-responsive">
+			<table class="tabela table" style="float: left;">
+				<thead>
+					<th>{{"TEAM" | translate}}</th>
+					<th>{{"GAME" | translate}}</th>
+					<th></th>
+				</thead>
+				<tbody>
+					<tr *ngFor="let t of timovi">
+						<td style="width: 50%">{{t.naziv}}</td>
+						<td style="width: 40%">{{t.nazivIgre}}</td>
+						<!--
+						<td style="width: 10%">
+							<button type="button" class="btn btn-dark btn-sm" (click)="izazoviTim(tim.ID)">
+								Izazovi
+							</button>
+						</td>
+						-->
+						<td>
+							<button type="button" class="button buttonDark btn-dark-outline" data-toggle="modal" data-target="#modalStatistika" (click)="prikaziStatistiku(t.ID)">
+								{{ "PROFILE_PAGE.STATISTICS.BUTTON" | translate }}
+							</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<!--modal sa prikazom statististike tima-->
+		<div class="modal fade" id="modalStatistika" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="modalNaslov">{{timStat.naziv}}</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						{{ "MATCH_PAGE.PLAYED_GAMES" | translate}} : {{timStat.brOdigranihMeceva}}
+						<br> {{ "MATCH_PAGE.WON" | translate}} : {{timStat.brPobeda}}
+						<br> {{ "MATCH_PAGE.LOST" | translate}} : {{timStat.brPoraza}}
+						<br> {{ "MATCH_PAGE.TIED" | translate}} : {{timStat.brNeresenih}}
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">{{"CLOSE" | translate}}</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="table-responsive mt-3">
+			<h3 class="naslovTabele">{{"PROFILE_PAGE.TOURNAMENT.NAME" | translate}}</h3>
+			<table class="tabela table">
+				<thead>
+					<th style="width: 30%">{{"PROFILE_PAGE.TOURNAMENT.TOUR_NAME" | translate}}</th>
+					<th style="width: 25%">{{"PROFILE_PAGE.TOURNAMENT.DATE_START" | translate}}</th>
+					<th style="width: 25%">{{"GAME_PAGE.TOURNAMENT.FINISHED" | translate}}</th>
+					<th style="width: 20%">{{"TEAM" | translate }}</th>
+				</thead>
+				<tbody>
+					<tr *ngFor="let turnir of turniri">
+						<td>{{turnir.naziv}}</td>
+						<td>{{turnir.datumPocetka | date: 'dd.MM.yyyy HH:mm' }}</td>
+						<td *ngIf="turnir.zavrsen">{{"YES" | translate}}</td>
+						<td *ngIf="!turnir.zavrsen">{{"NO" | translate}}</td>
+						<td>{{turnir.tim.nazivTima}}</td>
+					</tr>
+					<tr class="bezHovera" *ngIf="turniri && turniri.length == 0">
+						<td>{{"PROFILE_PAGE.TOURNAMENT.EMPTY" | translate}}</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</ng-template>
+	<br>
+	<br>
+	<br>
+</div>

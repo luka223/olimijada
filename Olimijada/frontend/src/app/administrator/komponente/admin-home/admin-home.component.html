@@ -1,0 +1,85 @@
+<div class="meni row">
+	<a class="col text-center" [routerLinkActive]="['active']" routerLink="turniri" [ngx-scroll-to]="'#target'">
+		<img class='ikona' src="assets/images/trophy2.png">
+		<p>{{"TOURNAMENTS" | translate}}</p>
+	</a>
+	<a class="col text-center" [routerLinkActive]="['active']" routerLink="igre" [ngx-scroll-to]="'#target'">
+		<img class='ikona' src="assets/images/add_game.png">
+		<p>{{"GAMES" | translate}}</p>
+	</a>
+	<a class="col text-center" [routerLinkActive]="['active']" routerLink="korisnici" [ngx-scroll-to]="'#target'">
+		<img class='ikona' src="assets/images/search_user.png">
+		<p>{{"ADMIN_MENU.SEARCH_USERS" | translate}}</p>
+	</a>
+	<a class="col text-center" (click)="otvoriPopUpZaMejlSvi()">
+		<img class="ikona" src="assets/images/send_mail2.png">
+		<p>{{"SEND_MAIL_TO_ALL" | translate}}</p>
+	</a>
+	<a class="col text-center" data-target="#modalLogoutAdmin" (click)="otvoriModalZaLogout()">
+		<img class="ikona" src="assets/images/cigra.png">
+		<p>{{"ADMIN_MENU.BACK" | translate}}</p>
+	</a>
+	<a class="col text-center" (click)="logOutAdmin()">
+		<img class="ikona" src="assets/images/log_ou_admin.png">
+		<p>{{"ADMIN_MENU.LOG_OUT" | translate}}</p>
+	</a>
+</div>
+
+<div id="posaljiMejlSvima" class="modal fade" role="dialog" aria-labelledby="posaljiMejl" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">{{"NEW_MAIL" | translate}}</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="zatvoriPopUpZaMejlSvi()">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+			<div class="modal-body">
+				<form>
+					<div class="form-group">
+						<label for="naslovMejlaSvi">{{"TITLE_MAIL" | translate}}</label>
+						<input type="text" class="form-control" id="naslovMejlaSvi">
+					</div>
+					<div class="form-group">
+						<label for="sadrzajMejlaSvi">{{"CONTENT_MAIL" | translate}}</label>
+						<textarea class="form-control" id="sadrzajMejlaSvi" rows="5" placeholder="..."></textarea>
+					</div>
+				</form>
+
+				<div id="uspesnoPoslatMejlSvi" style="display: none">
+					{{"ADMIN_PAGE.SENT_MAIL_MSG" | translate}}
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn button buttonDark" (click)="posaljiMejlSvima()">{{"SEND_MAIL" | translate}}</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="modalLogoutAdmin" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				{{"ADMIN_MENU.LOG_OUT" | translate}}
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				{{"ADMIN_PAGE.CHANGE_ADMIN_USER" | translate}}
+				<br> {{"ADMIN_PAGE.USER" | translate}} {{korisnik}} {{"ADMIN_PAGE.YOU_WILL" | translate}}
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-dismiss="modal" (click)="odjavaAdmina()">{{"YES" | translate}}</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">{{"NO" | translate}}</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- <hr style="border:5px solid #433c64;"> -->
+<div id="target">
+	<router-outlet></router-outlet>
+</div>

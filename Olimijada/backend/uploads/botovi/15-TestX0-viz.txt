@@ -1,0 +1,110 @@
+	// 	for (var i = 0; i < this.brIgraca * 2; i++)
+	// 	{
+	// 		this.animationFinis.push(true);
+	// 		if (i < this.brIgraca)
+	// 		{
+	// 			var x = this.getRandomIntInclusive(10, this.sirina - 10);
+	// 			var y = this.getRandomIntInclusive(10, this.visina - 10);
+
+
+	// 			this.tim1Kruzici.push(new createjs.Shape());
+	// 			this.tim1Kruzici[i].graphics.beginFill("DeepSkyBlue").drawCircle(0, 0, 20);
+	// 			this.tim1Kruzici[i].x = x;
+	// 			this.tim1Kruzici[i].y = y;
+	// 			this.stage.addChild(this.tim1Kruzici[i]);
+	// 		}
+	// 		else
+	// 		{
+	// 			var x1 = this.getRandomIntInclusive(10,this.sirina - 10);
+	// 			var y1 = this.getRandomIntInclusive(10, this.visina - 10);
+
+	// 			this.tim2Kruzici.push(new createjs.Shape());
+	// 			this.tim2Kruzici[i - this.brIgraca].graphics.beginFill("Red").drawCircle(0, 0, 20);
+	// 			this.tim2Kruzici[i - this.brIgraca].x = x1;
+	// 			this.tim2Kruzici[i - this.brIgraca].y = y1;
+	// 			this.stage.addChild(this.tim2Kruzici[i - this.brIgraca]);
+
+
+	// 		}
+	// 	}
+
+
+	// 	for (var i = 0; i < this.brIgraca * 2; i++)
+	// 	{
+	// 		this.pomeraj(i);
+	// 	}
+
+	// 	this.stage.update();
+	// }
+	}
+	// getRandomInt() {
+	// 	let min = 1;
+	// 	let max = 5;
+	// 	return Math.floor(Math.random() * (max - min)) + min;
+	// }
+
+	// getPosition(x, y, direction, step) {
+	// 	if(direction == 1) {
+	// 	  return { x:x, y:y+step };
+	// 	}
+	// 	else if(direction == 2) {
+	// 	  return { x:x+step, y:y };
+	// 	}
+	// 	else if(direction == 3) {
+	// 	  return { x:x, y:y-step };
+	// 	}
+	// 	else {
+	// 	  return { x:x-step, y:y };
+	// 	}
+	//   }
+	//   animationFinisFunction(i,pom)
+	//   {
+	// 	if(i<this.brIgraca)
+	// 	{
+	// 		if(this.tim1Kruzici[i].x != pom.x && this.tim1Kruzici[i].y != pom.y) {
+	// 		  return true;
+	// 		}
+	// 		else return false;
+	// 	}
+	// 	else {
+	// 		if(this.tim2Kruzici[i-this.brIgraca].x == pom.x && this.tim2Kruzici[i-this.brIgraca].y == pom.y) {
+	// 			return true;
+	// 		  }
+	// 		  else return false;
+	// 	}
+	//   }
+	// pomeraj(i)
+	// {
+	// 	var brPomeranje = 900;
+	// 	for (var j = 0; j < brPomeranje;)
+	// 	{
+	// 		if (i < this.brIgraca)
+	// 		{
+	// 			var k=this.getRandomIntInclusive(1000,5000);
+	// 			j+=1;
+
+	// 			var pom=this.getPosition(this.tim1Kruzici[i].x,this.tim1Kruzici[i].y,this.getRandomInt(),200);
+	// 			while(pom.x>this.sirina || pom.y>this.visina)pom=this.getPosition(this.tim1Kruzici[i].x,this.tim1Kruzici[i].y,this.getRandomInt(),200);
+	// 			if(this.animationFinis[i]==true)
+	// 			{
+	// 				this.animationFinis[i]=false;
+	// 				createjs.Tween.get(this.tim1Kruzici[i], { loop: false })
+	// 					.to({ x: pom.x, y: pom.y }, k);
+						
+	// 			}
+	// 			this.animationFinis[i]=this.animationFinisFunction(i,pom);
+	// 			this.tim1Kruzici[i].x=pom.x;
+	// 					this.tim1Kruzici[i].y=pom.y;	
+	// 		}
+	// 		else{
+	// 			var k=this.getRandomIntInclusive(1000,5000);
+	// 			j+=1;
+	// 			createjs.Tween.get(this.tim2Kruzici[i-this.brIgraca], { loop: false })
+	// 			.to({ x: this.tim2Kruzici[i-this.brIgraca].x-this.getRandomIntInclusive(10,this.sirina), y:this.tim2Kruzici[i-this.brIgraca].x-this.getRandomIntInclusive(10,this.visina) }, k);
+
+	// 		}
+	// 	}
+	// 	createjs.Ticker.setFPS(30);
+	// 	createjs.Ticker.addEventListener("tick", this.stage);
+	// 	this.stage.update();
+	// }

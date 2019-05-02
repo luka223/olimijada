@@ -1,0 +1,53 @@
+.pozadina{
+	width: 100%;
+	background-image: url("/assets/images/background.png");
+	background-repeat: repeat;
+	background-attachment: fixed;
+}
+
+.pozadina-boja{
+	background-color:rgba(50, 45, 62, 1);
+}
+
+.opis {
+	font-size: 60px;
+}
+
+.upload {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: dashed black 1px;
+	float: right;
+	margin-top: 10px;
+	width: 100%;
+	height: 300px;
+	opacity: 0.6;
+}
+
+#uploadSlika {
+	width: 10%;
+}
+
+#prikazUploada {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+label:hover {
+	opacity: 1;
+	cursor: pointer;
+}
+
+#centarUploada {
+	text-align: center;
+}
+
+.checkboxDiv input+span+i {
+	visibility: hidden;
+}
+
+.checkboxDiv input:checked+span+i {
+	visibility: visible;
+}

@@ -1,0 +1,11 @@
+<div *ngIf="validnost==true">
+	<h2 style="text-align: center"> {{"SUCCESS_ACTIVATION"|translate}}
+		<a href="{{address}}">Olimijada</a>
+	</h2>
+</div>
+
+<div *ngIf="validnost==false">
+	<h2 style="text-align: center"> {{"BAD_ACTIVATION"|translate}}
+		<a href="{{address}}">Olimijada</a>
+	</h2>
+</div>

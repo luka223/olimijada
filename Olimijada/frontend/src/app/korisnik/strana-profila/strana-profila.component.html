@@ -1,0 +1,38 @@
+<!-- U ovoj kompoenti se nalazi header profila - slika, level, progress bar i username korisnika -->
+<div *ngIf="daLiPostoji; else greska" class="container">
+	<div id="profil" class="w-100 p-2">
+		<div class="container clear-fix" id="profil-dva">
+			<div class="row align-self-center p-2 m-2">
+				<img class="navbar-brand img-thumbnail bg-white" src="{{profilnaSlika}}" alt="">
+			</div>
+			<div class="row align-self-center p-2 m-2" *ngIf="gledaSvojProfil">
+				<input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput>
+				<button class="button btn-outline-dark" (click)="fileInput.click()" style="text-align: center; margin: auto;">
+					{{ "PROFILE_PAGE.CHANGE_IMAGE" | translate}}
+				</button>
+				<div id="losFajl" class="mt-2 alert alert-danger alert-dismissible collapse" style="display: none;">
+					<button type="button" class="close" (click)="sakrijAlert()">&times;</button>
+					{{"PROFILE_PAGE.ERROR_IMAGE" | translate}}
+				</div>
+			</div>
+			<div class="row align-self-center" style="text-align: center;">
+				<h2 class="opis w-100" style="color: white;">{{username}}</h2>
+			</div>
+			<div class="row align-self-center p-2 m-2" style="text-align: center;">
+				<h3 class="w-100" style="color:white;">{{"PROFILE_PAGE.LEVEL" | translate}}: {{nivo}}</h3>
+			</div>
+			<ng-template #tipContent>{{ rankPoeni + (nivo - 1) * 100  }} / {{ nivo * 100 }}</ng-template>
+			<div class="progress row align-self-center p-10 m-10" style="height: 30px;">
+				<div class="progress-bar progress-bar-success" [style.width.%]="rankPoeni" [ngbTooltip]="tipContent"></div>
+			</div>
+			
+		</div>
+	</div>
+
+	<!-- U komponenti javni profil se nalaze sve tabele i tamo je regulisano da li korisnik gleda svoj profil -->
+	<app-javni-profil></app-javni-profil>
+</div>
+
+<ng-template #greska>
+	<h2>{{"PROFILE_PAGE.ERROR.DOES_NOT_EXIST_1" | translate}} {{username}} {{"PROFILE_PAGE.ERROR.DOES_NOT_EXIST_2" | translate}}</h2>
+</ng-template>

@@ -1,0 +1,39 @@
+<div class="wrapper">
+	<div class="row scoreboard p-3">
+		<div class="col-auto prviGrb">
+			<img [src]="grbTima1" alt="Grb">
+		</div>
+		<div class="col-sm text-center">
+			<!-- Mali i veliki ekran sluze da se ime prikaze
+			iznad/ispod grba u zavisnosti od velicine ekrana -->
+			<div  class="maliEkran">{{nazivTima1}}</div>
+			<div #rez1 id="rez1" class="rezultat p-3">{{rezultatTima1}}</div>
+			<div class="velikiEkran">{{nazivTima1}}</div>
+		</div>
+		<div class="col-sm text-center">
+			<div #rez2 id="rez2" class="rezultat p-3">{{rezultatTima2}}</div>
+			<div>{{nazivTima2}}</div>
+		</div>
+		<div  class="col-auto drugiGrb">
+			<img [src]="grbTima2" alt="Grb">
+		</div>
+	</div>
+	<div>
+		<audio autoplay>
+			<source src="assets/mix.mp3" type="audio/mpeg">
+		</audio>
+	</div>
+	<div id="vizualizaija" class="mt-2" style="text-align: center;">
+		<app-vizuelizacija-meca></app-vizuelizacija-meca>
+	</div>
+
+	<h3 class="opis text-center">{{"STATISTIKA" | translate}}</h3>
+	<div class="row">
+		<div *ngIf="statistikaTima1" class="col-sm">
+			<canvas style="max-width: 100%" baseChart [data]="statistikaTima1" [labels]="statistikaLabele" [colors]="bojeGrafika" [chartType]="doughnutChartType"></canvas>
+		</div>
+		<div *ngIf="statistikaTima2" class="col-sm">
+			<canvas style="max-width: 100%" baseChart [data]="statistikaTima2" [labels]="statistikaLabele" [colors]="bojeGrafika" [chartType]="doughnutChartType"></canvas>
+		</div>
+	</div>
+</div>

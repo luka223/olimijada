@@ -1,0 +1,43 @@
+<div *ngIf="jesteLiga">
+	<div *ngIf="turnir != undefined">
+		<nav>
+			<div class="nav nav-tabs" id="nav-tab" role="tablist"  style="background-color: rgba(78, 69, 124, 0.9);" >
+				<a *ngFor="let kolo of turnir.kolo;" [ngClass]="{active: kolo.brojKola == 1}"  class="nav-item nav-link" id="tab-{{kolo.brojKola}}" data-toggle="tab"
+				 href="#{{kolo.brojKola}}" role="tab">{{kolo.brojKola}}</a>
+			</div>
+		</nav>
+		<div class="tab-content" id="nav-tabContent">
+			<div *ngFor="let kolo of turnir.kolo;"  [ngClass]="{active: kolo.brojKola == 1, show: kolo.brojKola == 1}" class="tab-pane fade" id="{{kolo.brojKola}}" role="tabpanel">
+				<div class="table-responsive" >
+					<table class="tabela table"  style="background-color: rgba(78, 69, 124, 0.9);">
+						<thead  style="background-color: rgba(78, 69, 124, 0.9);">
+							<th  style="background-color: rgba(78, 69, 124, 0.9);">{{"GAME_PAGE.HOME_TEAM" | translate}}</th>
+							<th  style="background-color: rgba(78, 69, 124, 0.9);">{{"GAME_PAGE.AWAY_TEAM" | translate}}</th>
+							<th  style="background-color: rgba(78, 69, 124, 0.9);">{{"GAME_PAGE.SCORE" | translate}}</th>
+							<th  style="background-color: rgba(78, 69, 124, 0.9);">{{"GAME_PAGE.START_TIME" | translate}}</th>
+							<th style="background-color: rgba(78, 69, 124, 0.9);"></th>
+						</thead>
+						<tbody>
+							<tr *ngFor="let mec of kolo.mecevi">
+								<td>{{ mec.nazivTima1 }}</td>
+								<td>{{ mec.nazivTima2 }}</td>
+								<td *ngIf="mec.zavrsen">
+									{{mec.poeniTima1}} : {{mec.poeniTima2}}
+								</td>
+								<td *ngIf="!mec.zavrsen">
+									-
+								</td>
+								<td>
+									{{mec.pocetakMeca | date: 'dd.MM.yyyy HH:mm'}}
+								</td>
+								<td *ngIf="mec.zavrsen">
+									<a class="btn" routerLink="/mec/{{mec._id}}" target="_blank">{{"GAME_PAGE.SEE_GAME" | translate}}</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

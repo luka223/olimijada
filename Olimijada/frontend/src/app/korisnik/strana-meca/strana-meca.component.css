@@ -1,0 +1,52 @@
+img {
+	height: 100px;
+}
+
+.wrapper {
+	width: 90% !important;
+	margin: 5px auto;
+}
+
+.row {
+	margin: 0 !important;
+	display: flex;
+	align-items: center;
+}
+
+.scoreboard {
+	background-color: rgba(255, 255, 255, 0.2);
+	font-size: 20px;
+}
+
+.rezultat {
+	display: inline-block;
+	background-color: rgba(0, 0, 0, 0.2);
+	font-size: 36px;
+	margin-bottom: 5px;
+}
+
+.maliEkran {
+	display: none;
+}
+
+.velikiEkran {
+	display: block;
+}
+
+@media screen and (max-width: 575px) {
+	.scoreboard .col-auto {
+		margin: auto;
+	}
+	.prviGrb {
+		margin-bottom: 15px !important;
+	}
+	.drugiGrb {
+		margin-top: 15px !important;
+	}
+	.maliEkran {
+		display: block;
+	}
+	.velikiEkran {
+		display: none;
+	}
+}

@@ -1,0 +1,127 @@
+<nav *ngIf="!adminStrana" id="nav" class="navbar navbar-expand-lg linija">
+	<a *ngIf="!isLogged" class="navbar-brand">
+		<img src="../assets/images/logo2.png" alt="Olimijada" style="width: 100px;">
+	</a>
+	<a *ngIf="isLogged" class="navbar-brand" [routerLink]="['/home']">
+		<img src="../assets/images/logo2.png" alt="Olimijada" style="width: 100px;">
+	</a>
+	<button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav mr-auto">
+			<li *ngIf="isLogged" class="nav-item">
+				<span class="text-uppercase" id="olimijada">Ol<span style="color: dodgerblue;">imi</span>jada</span>
+			</li>
+			<!-- <li *ngIf="isLogged" class="search-container nav-item">
+				<form class="form-inline my-2 my-lg-0" style="margin-left: 15px">
+					<input type="text" placeholder="{{'SEARCH' | translate}}..." name="search">
+					<button type="submit">
+						<i class="fa fa-search"></i>
+					</button>
+				</form>
+			</li> -->
+		</ul>
+		<ul class="navbar-nav ml-auto" [routerLinkActive]="['active']">
+			<li *ngIf="!isLogged" class="nav-item">
+				<a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['/']" [routerLinkActiveOptions]="{exact: true}">{{"HOME" | translate}}</a>
+			</li>
+			<li *ngIf="isLogged" class="nav-item">
+				<a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['/home']">{{"HOME" | translate}}</a>
+			</li>
+			<li *ngIf="isLogged" class="nav-item">
+				<a class="nav-link" [routerLinkActive]="['active']" [routerLink]="[vratiUrlZaProfil()]">{{"PROFIL" | translate}}</a>
+			</li>
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					{{"GAMES" | translate}}
+				</a>
+				<div class="dropdown-menu dropdown-menu-right igre" aria-labelledby="navbarDropdown">
+					<div class="search-container pretragaIgara">
+						<form class="form-inline my-2 my-lg-0">
+							<input type="text" placeholder="{{'SEARCH' | translate}}..." autocomplete="off" name="search" [(ngModel)]="igrePretraga" (keyup)="filtrirajIgre()">
+							<button (click)="ukloniPretragu()">
+								<i class="fas fa-times-circle"></i>
+							</button>
+						</form>
+					</div>
+					<div style="margin-top: 10px;">
+						<a *ngFor="let igra of igre" class="dropdown-item text-center" [routerLinkActive]="['active']" [routerLink]="['/igre/', igra.naziv]">
+							<img class='ikona' *ngIf="igra.ikona" [src]="igra.ikona">
+							<p>{{igra.naziv}}</p>
+						</a>
+					</div>
+
+					<p class="dropdown-item-text" *ngIf="igre?.length == 0">
+						{{"NO_RESULTS" | translate}}
+					</p>
+				</div>
+			</li>
+			<li *ngIf="!isLogged && signInPoruka != ''" class="divider-vertical"></li>
+			<li *ngIf="!isLogged" class="nav-item">
+				<a class="nav-link" (click)="skroluj()">{{signInPoruka | translate}}</a>
+			</li>
+			<li *ngIf="isLogged" class="divider-vertical"></li>
+			<li *ngIf="isLogged" class="nav-item dropdown slicica">
+				<a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<input type="image" src="../assets/images/bell.png" alt="notifications">
+					<i *ngIf="imaNovihNotifikacija" class="fas fa-circle"></i>
+				</a>
+				<div class="dropdown-menu dropdown-menu-right notifikacije" aria-labelledby="navbarDropdown">
+					<a *ngFor="let notifikacija of notifikacije" class="dropdown-item text-left notifikacija" (click)="prikaziNotifkaciju(notifikacija.ID)">
+						<span *ngIf="notifikacija.procitana == 'false'" class="badge badge-light mr-1">{{"NEW" | translate}}</span>
+						{{izabraniJezik == 'en' ? notifikacija.text : notifikacija.tekst}}
+					</a>
+					<p class="dropdown-item-text" *ngIf="notifikacije?.length == 0">
+						{{"NO_NOTIFICATIONS" | translate}}
+					</p>
+				</div>
+			</li>
+			<li class="divider-vertical"></li>
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					{{izabraniJezik | uppercase}}
+				</a>
+				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+					<a class="dropdown-item" (click)="promeniJezik('en')">
+						<img class="flag" src="../assets/images/flags/eng.png" alt="{{'ENGLISH' | translate}}"> {{'ENGLISH' | translate}}
+					</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" (click)="promeniJezik('sr')">
+						<img class="flag" src="../assets/images/flags/srb.png" alt="{{'SERBIAN' | translate}}"> {{'SERBIAN' | translate}}
+					</a>
+				</div>
+			</li>
+			<li *ngIf="isLogged" class="divider-vertical"></li>
+			<li *ngIf="isLogged" class="nav-item slicica">
+				<a class="nav-link">
+					<input type="image" src="../assets/images/settings.png" alt="Settings" [routerLinkActive]="['active']" [routerLink]="['/detalji-profila']">
+				</a>
+			</li>
+			<li *ngIf="isLogged" class="divider-vertical"></li>
+			<li *ngIf="isLogged" class="nav-item slicica">
+				<a class="nav-link">
+					<input type="image" src="../assets/images/logout.png" alt="Log out" (click)="odjaviKorisnika()">
+				</a>
+			</li>
+		</ul>
+	</div>
+</nav>
+
+<div id="Modal" class="modal fade" role="dialog" data-backdrop="static">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<!-- <div class="modal-header">
+				<button type="button" class="close closefirstmodal" data-dismiss="modal" aria-label="Close">&times;</button>
+			</div> -->
+			<div class="modal-body">
+				<p *ngIf="izabranaNotifikacija">{{izabraniJezik == 'en' ? izabranaNotifikacija.text : izabranaNotifikacija.tekst}}</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="button btn-outline-dark" data-dismiss="modal" aria-label="Close">{{"CLOSE" | translate}}</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<router-outlet></router-outlet>

@@ -1,0 +1,93 @@
+<div *ngIf="isLogged">
+	<div class="container-fluid clearfix">
+		<h3 class="naslovTabele">{{ "HOMEPAGE.TURNIR.NASLOV" | translate}}</h3>
+		<div class="table-responsive">
+			<table class="tabela tabela-hover table">
+				<thead>
+					<th>{{"HOMEPAGE.TURNIR.NAZIV" | translate}}</th>
+					<th>{{"HOMEPAGE.TURNIR.DATUM_POCETKA" | translate}}</th>
+					<th>{{"MIN_RANK" | translate }}</th>
+					<th>{{"MAX_RANK" | translate}}</th>
+				</thead>
+				<tbody>
+					<tr (click)="otvoriPopUp(turnir._id)" *ngFor="let turnir of turniri">
+						<td>{{turnir.naziv}}</td>
+						<td>{{turnir.datumPocetka | date: 'dd.MM.yyyy HH:mm' }}</td>
+						<td>{{turnir.minRang}}</td>
+						<td>{{turnir.maxRang}}</td>
+					</tr>
+					<tr class="bezHovera" *ngIf="turniri?.length == 0">
+						<td class="text-center" colspan="4">{{"NO_TOURNAMENTS" | translate}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<!-- Modal -->
+	<div id="Form" class="modal fade" role="dialog">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">{{"APPLY_TOURNAMENT.APPLY" | translate}} {{izabranTurnir.nazivTurnira}}</h4>
+					<button type="button" class="close closefirstmodal" (click)="zatvoriPopup()">&times;</button>
+				</div>
+				<div class="modal-body">
+					<div *ngIf="timovi.length > 0; else nemaTimove">
+						<div *ngIf="prijavljen == false; else prijavljenForma">
+							<div *ngIf="zatvorenePrijave; else nisuZatvorenePrijave">
+								<h5>{{"APPLY_TOURNAMENT.CLOSED" | translate}}</h5>
+							</div>
+							<ng-template #nisuZatvorenePrijave>
+								<!--<div *ngIf="mozeDaSePrijavi; else nijeDobarRank">-->
+								<label class="my-1 mr-2" for="Form">{{"APPLY_TOURNAMENT.CHOOSE_TEAM" | translate}}</label>
+								<select class="custom-select my-1 mr-sm-2" id="izaberiTim">
+									<option selected>{{"APPLY_TOURNAMENT.CHOOSE" | translate}}</option>
+									<option *ngFor="let tim of timovi" value="{{tim.ID}}">{{tim.naziv}}</option>
+								</select>
+								<div id="uspesnoPrijavljen" style="display: none">
+									{{"APPLY_TOURNAMENT.SUCCESS_INSERT" | translate }}
+								</div>
+								<div id="timNemaDobarRank" style="display: none">
+									{{"APPLY_TOURNAMENT.RANK" | translate }}
+								</div>
+								<!--</div>
+								<ng-template #nijeDobarRank>
+									<h3>{{"APPLY_TOURNAMENT.RANK" | translate}}</h3>
+								</ng-template>-->
+							</ng-template>
+						</div>
+						<ng-template #prijavljenForma>
+							<div id="vecJePrijavljen">
+								{{"APPLY_TOURNAMENT.ALREADY_EXIST" | translate}} {{prijavljenTim.naziv}}
+							</div>
+							<label class="my-1 mr-2" for="Form">{{"APPLY_TOURNAMENT.CHOOSE_TEAM" | translate}}</label>
+							<select class="custom-select my-1 mr-sm-2" id="izaberiTim">
+								<option *ngFor="let tim of timovi" value="{{tim.ID}}">{{tim.naziv}}</option>
+							</select>
+							<div id="uspesnoPromenjen" style="display: none">
+								{{"APPLY_TOURNAMENT.SUCCESS_UPDATE" | translate}}
+							</div>
+						</ng-template>
+					</div>
+					<ng-template #nemaTimove>
+						<h6>{{"APPLY_TOURNAMENT.ZERO_TEAMS" | translate}} {{izabranTurnir.nazivIgre}}</h6>
+						<button type="button" class="button" (click)="odvediGaNaStranuProfila()">{{"PROFIL" | translate}}</button>
+					</ng-template>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="button" (click)="odvediNaStranuTurnira(izabranTurnir.idTurnira)">{{ "APPLY_TOURNAMENT.TOURNAMENT_PAGE" | translate}}</button>
+					<div *ngIf="zatvorenePrijave == false">
+						<div *ngIf="timovi.length > 0">
+							<button type="button" class="button" (click)="proveriModal()">{{"APPLY_TOURNAMENT.SUBMIT" | translate}}</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+<div *ngIf="!isLogged">
+
+</div>

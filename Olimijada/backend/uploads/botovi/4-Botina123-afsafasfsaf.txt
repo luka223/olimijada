@@ -1,0 +1,1 @@
+public class Bot{    static int prom = -10;    private int taktika = -1;}

@@ -1,0 +1,69 @@
+<div *ngIf="turnir">
+	<div *ngIf="turnir.zavrsen == true || turnir.tipTurnira == 1">
+		<hr>
+		<br>
+		<br>
+		<div id="content" #content style="margin:auto;background-color:rgb(50, 45, 62) ">
+			<h1 style="text-align: center" *ngIf="turnir.zavrsen==true">
+				<img src="../../../assets/images/left_firework.png" height=10% width="10%"> {{"PDF.TOURNAMENT"|translate}} "{{turnir.naziv}}" {{"PDF.GAME"|translate}} "{{turnir.nazivIgre}}" {{"PDF.END"|translate}}
+				<img src="../../../assets/images/right_firework.png" height=10% width="10%">
+			</h1>
+			<h3 *ngIf="turnir.zavrsen==true" class="opis" style="text-align: center">{{"PDF.RESULTS_FINAL"|translate}}</h3>
+			<h3 *ngIf="turnir.zavrsen==false" class="opis" style="text-align: center">{{"PDF.RESULTS_CURRENT"|translate}}</h3>
+			
+			<div class="table-responsive">
+				<table class="tabela table " style="max-width: 50%;margin: auto">
+					<thead>
+						<th scope="col">
+							{{"PDF.POSITION"|translate}}
+						</th>
+						<th scope="col">
+							{{"PDF.TEAM_NAME"|translate}}
+						</th>
+						<th scope="col">
+							{{"PDF.USERNAME"|translate}}
+						</th>
+						<th *ngIf="turnir.tipTurnira == 1" scope="col">
+						 	{{"MATCH_PAGE.PLAYED_GAMES" | translate}}
+						</th>
+						<th *ngIf="turnir.tipTurnira == 1" scope="col">
+							{{"MATCH_PAGE.WON" | translate}}
+						</th>
+						<th *ngIf="turnir.tipTurnira == 1" scope="col">
+							{{"MATCH_PAGE.TIED" | translate}}
+						</th>
+						<th *ngIf="turnir.tipTurnira == 1" scope="col">
+							{{"MATCH_PAGE.LOST" | translate}}
+						</th>
+						<th *ngIf="turnir.tipTurnira == 1" scope="col">
+							{{"PDF.POINTS"|translate}}
+						</th>
+					</thead>
+					<tbody>
+						<tr *ngFor="let pozicija of rangLista ">
+							<td>{{pozicija.pozicija}}</td>
+							<td>{{pozicija.naziv}}</td>
+							<td>{{pozicija.nazivKorisnika}}</td>
+							<td *ngIf="turnir.tipTurnira == 1">{{pozicija.brojPobeda + pozicija.brojNeresenih + pozicija.brojPoraza}}</td>
+							<td *ngIf="turnir.tipTurnira == 1">{{pozicija.brojPobeda}}</td>
+							<td *ngIf="turnir.tipTurnira == 1">{{pozicija.brojNeresenih}}</td>
+							<td *ngIf="turnir.tipTurnira == 1">{{pozicija.brojPoraza}}</td>
+							<td *ngIf="turnir.tipTurnira == 1">{{pozicija.brojPoena}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<br>
+			<br>
+			<br>
+			<h3 style="text-align: center">{{"PDF.POWERED"|translate}}
+				<br>
+				<br>
+				<img src="../../../assets/images/Inception_logo_white.png" height=5% width="5%">
+				<img src="../../../assets/images/logo2.png" height=5% width="5%">
+			</h3>
+		</div>
+		<button *ngIf="turnir.zavrsen" id="pdf" style="float: right;;margin-right: 3%;margin-bottom: 3%" type="button" (click)="pdfDownload()"
+		 class="button btn-outline-dark">{{"PDF.EXPORT"|translate}}</button>
+	</div>
+</div>

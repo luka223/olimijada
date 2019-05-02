@@ -1,0 +1,24 @@
+<form (submit)="azurirajPodatke()" method="post">
+	<div class="form-group">
+		<input id="trenutniPass" class="form-control" type="password" placeholder='{{"PROFILE_PAGE.CURR_PASSWORD" | translate}}' [(ngModel)]="trenutniPassword" name="trenutniPass" />
+	</div>
+
+	<div class="form-group">
+		<input id="noviPass1" class="form-control" type="password" placeholder='{{"PROFILE_PAGE.NEW_PASSWORD" | translate}}' [(ngModel)]="noviPassword1" name="noviPass1" />
+	</div>
+
+	<div class="form-group">
+		<input id="noviPass2" class="form-control" type="password" placeholder='{{"PROFILE_PAGE.NEW_PASSWORD2" | translate}}' [(ngModel)]="noviPassword2" name="noviPass2" />
+	</div>
+
+	<div class="form-group">
+		<input class="form-control" type="email" placeholder='{{"PROFILE_PAGE.NEW_EMAIL" | translate}}' name="email" [(ngModel)]="email">
+	</div>
+
+	<button type="submit" class="button btn-block btn-outline-dark" name="" id="dugme">{{"PROFILE_PAGE.UPDATE" | translate}}</button>
+
+	<div id="poruka" class="alert alert-dismissible collapse" style="display: none;">
+		<button type="button" class="close" (click)="sakrijAlert();">&times;</button>
+		{{porukaOAzuriranju | translate}}
+	</div>
+</form>

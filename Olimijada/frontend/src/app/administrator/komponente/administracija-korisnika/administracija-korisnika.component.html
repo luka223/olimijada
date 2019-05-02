@@ -1,0 +1,201 @@
+<div class="container clearfix">
+	<div class="search-container">
+		<form class="form-inline my-2 my-lg-0">
+			<input type="text" placeholder="{{'SEARCH' | translate}}..." autocomplete="off" name="search" [(ngModel)]="korisniciPretraga"
+			 (keyup)="vratiRezultatePretrage()">
+			<button (click)="pokupiSveKorisnike()">
+				<i class="fas fa-times-circle"></i>
+			</button>
+		</form>
+	</div>
+	<nav>
+		<div class="nav nav-tabs" id="nav-tab" role="tablist">
+			<a class="nav-item nav-link active" id="nav-korisnik-tab" data-toggle="tab" href="#nav-korisnik" role="tab" aria-controls="nav-korisnik"
+			 aria-selected="true" (click)="aktivanTab(1)">{{"USERS" | translate}}</a>
+			<a class="nav-item nav-link" id="nav-admin-tab" data-toggle="tab" href="#nav-admin" role="tab" aria-controls="nav-admin"
+			 aria-selected="false" (click)="aktivanTab(2)">{{"ADMINS" | translate}}</a>
+		</div>
+	</nav>
+	<div class="tab-content" id="nav-tabContent">
+		<div class="tab-pane fade show active" id="nav-korisnik" role="tabpanel" aria-labelledby="nav-korisnik-tab">
+			<div class="table-responsive">
+				<table class="tabela table text-center">
+					<thead>
+						<th>{{"USERNAME" | translate}}</th>
+						<th>E-mail</th>
+						<th>{{"ADMIN_PAGE.SEND_MAIL" | translate}}</th>
+						<th style="width: 350px;">{{"ADMIN_PAGE.GIVE_ADMIN_RIGHT" | translate}}</th>
+						<th>{{"DELETE" | translate}}</th>
+					</thead>
+					<tbody>
+						<tr *ngFor="let korisnik of korisnici">
+							<td>
+								<a class="nav-link" target="_blank" [routerLink]="[vratiUrlZaProfil(korisnik.username)]">{{korisnik.username}}</a>
+							</td>
+							<td>{{korisnik.email}}</td>
+							<td>
+								<!--	<button class="button buttonDark" (click)="otvoriPopUpZaMejl(korisnik.email)"> -->
+								<img (click)="otvoriPopUpZaMejl(korisnik.email)" src="../../../../assets/images/mail_icon.png" style="height: 50px;">
+								<!--	</button>-->
+							</td>
+							<td>
+								<button type="button" class="button buttonDark" (click)="otvoriPopUpZaAdmina(korisnik.username)">
+									{{"ADMIN_PAGE.GIVE_ADMIN_RIGHT" | translate}}
+								</button>
+							</td>
+							<td style="text-align: center;">
+								<button style="display: inline; margin: auto; align-self: center;" type="button" class="close" aria-label="Close" (click)="otvoriPopUp(korisnik.username)">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<div id="posaljiMejl" class="modal fade" role="dialog" aria-labelledby="posaljiMejl" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">{{"NEW_MAIL" | translate}}</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="zatvoriPopUpZaMejl()">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+
+							<div class="modal-body">
+								<form>
+									<div class="form-group">
+										<label for="naslovMejla">{{"TITLE_MAIL" | translate}}</label>
+										<input type="text" class="form-control" id="naslovMejla">
+									</div>
+									<div class="form-group">
+										<label for="sadrzajMejla">{{"CONTENT_MAIL" | translate}}</label>
+										<textarea class="form-control" id="sadrzajMejla" rows="5" placeholder="..."></textarea>
+									</div>
+								</form>
+
+								<div id="uspesnoPoslatMejl" style="display: none">
+									{{"ADMIN_PAGE.SENT_MAIL_MSG" | translate}}
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn button buttonDark" (click)="posaljiMejl()">{{"SEND_MAIL" | translate}}</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<div id="brisanje" class="modal fade" role="dialog" aria-labelledby="obrisiKorisnika" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">{{"ADMIN_PAGE.DELETE_USER" | translate}}</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="zatvoriPopUp()">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								{{"ADMIN_PAGE.DELETE_USER_MSG" | translate}}
+								<strong>
+									<em>{{izabraniKorisnikZaBrisanje}}</em>
+								</strong> ?
+								<div id="uspesnoObrisan" style="display: none">
+									{{"ADMIN_PAGE.SUCCESS_DELETE_USER" | translate }}
+									<strong>
+										<em>{{izabraniKorisnikZaBrisanje}}</em>
+									</strong>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn button buttonDark" (click)="obrisiKorisnika()">{{"YES" | translate}}</button>
+								<button type="button" class="btn button buttonDark" (click)="zatvoriPopUp()">{{"NO" | translate}}</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div id="postavljanjeAdmina" class="modal fade" role="dialog" aria-labelledby="postaviGaKaoAdmina" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">{{"ADMIN_PAGE.NEW_ADMIN" | translate}}</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="zatvoriPopUpZaAdmina()">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								{{"ADMIN_PAGE.NEW_ADMIN_MSG" | translate}}
+								<strong>
+									<em>{{izabranNoviAdmin}}</em>
+								</strong> ?
+								<div id="uspesnoDodat" style="display: none">
+									{{"ADMIN_PAGE.SUCCESS_NEW_ADMIN" | translate }}
+									<strong>
+										<em>{{izabranNoviAdmin}}</em>
+									</strong>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn button buttonDark" (click)="dodeliAdministratorskaPrava()">{{"YES" | translate}}</button>
+								<button type="button" class="btn button buttonDark" (click)="zatvoriPopUpZaAdmina()">{{"NO" | translate}}</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="tab-pane fade" id="nav-admin" role="tabpanel" aria-labelledby="nav-admin-tab">
+			<div class="table-responsive">
+				<table class="table tabela">
+					<thead>
+						<th>{{"USERNAME" | translate}}</th>
+						<th>E-mail</th>
+						<th *ngIf="superAdmin">{{"ADMIN_PAGE.REMOVE_ADMIN" | translate}}</th>
+					</thead>
+					<tbody>
+						<tr *ngFor="let admin of admins">
+							<td>
+								<a class="nav-link" target="_blank" [routerLink]="[vratiUrlZaProfil(admin.username)]">{{admin.username}}</a>
+							</td>
+							<td>{{admin.email}}</td>
+							<td *ngIf="superAdmin">
+								<button style="float: left;" type="button" class="close" aria-label="Close" (click)="otvoriPopUpDaUkloniAdmina(admin.username)">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<div id="ukloniAdmina" class="modal fade" role="dialog" aria-labelledby="ukloniAdmina" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">{{"ADMIN_PAGE.REMOVE_ADMIN" | translate}}</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="zatvoriPopUpDaUkloniAdmina()">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								{{"ADMIN_PAGE.REMOVE_ADMIN_MSG" | translate}}
+								<strong>
+									<em>{{izabranAdminZaBrisanje}}</em>
+								</strong> ?
+								<div id="uspesnoUklonjen" style="display: none">
+									{{"ADMIN_PAGE.SUCCESS_REMOVE_ADMIN" | translate }}
+									<strong>
+										<em>{{izabranAdminZaBrisanje}}</em>
+									</strong>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn button buttonDark" (click)="ukloniAdministratorskaPrava()">{{"YES" | translate}}</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

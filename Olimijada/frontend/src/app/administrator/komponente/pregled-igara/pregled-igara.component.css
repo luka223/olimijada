@@ -1,0 +1,10 @@
+.flex-align{
+	display: flex;
+	width: 100%;
+	justify-content: center;
+  	align-items: center;
+}
+
+.flex-align button{
+	margin: 5px;
+}

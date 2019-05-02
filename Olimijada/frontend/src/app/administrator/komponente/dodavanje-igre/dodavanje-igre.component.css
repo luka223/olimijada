@@ -1,0 +1,26 @@
+.upload {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: dashed black 1px;
+	float: right;
+	margin-top: 10px;
+	width: 100%;
+	height: 300px;
+	opacity: 0.6;
+}
+
+.centarUploada img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.upload:hover {
+	opacity: 1;
+	cursor: pointer;
+}
+
+.row {
+	margin: 0 !important;
+}

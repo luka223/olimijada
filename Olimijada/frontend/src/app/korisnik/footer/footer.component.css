@@ -1,0 +1,39 @@
+footer {
+	background-color: #433c64;
+	color: white;
+	margin-top: 130px;
+}
+
+@media (max-height: 60vh) {
+	footer {
+		bottom: 0;
+		position: absolute;
+	}
+}
+
+.logo {
+	position: relative;
+	top: -120px;
+	margin-bottom: -120px;
+}
+
+.slika {
+	width: 60%;
+}
+
+.fab, .link, p {
+	color: rgba(255, 255, 255, 0.7);
+}
+
+.fab:hover, .link:hover {
+	color: rgba(255, 255, 255, 1);
+	border: 0;
+}
+
+.fab {
+	font-size: 40px;
+}
+
+.link {
+	text-decoration: none;
+}

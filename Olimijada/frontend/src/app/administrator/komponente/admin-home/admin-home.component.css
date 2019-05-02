@@ -1,0 +1,40 @@
+
+p{
+	margin-left: 15px;
+	margin-right: 15px;
+}
+a {
+	
+	
+	text-decoration: none;
+	color: white !important;
+}
+
+.meni{
+	margin:10px auto;
+	text-align: center;
+}
+.meni .active {
+	color: white !important;
+	border: solid white 1px;
+	background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+
+.ikona {
+	height: 100px;
+	width: 100px;
+}
+
+.meni a {
+	border: solid transparent 1px;
+	display: inline-block;
+	width: max-content;
+	margin: 0;
+}
+
+.meni a:hover {
+	color: white !important;
+	border: solid white 1px;
+	background-color: rgba(255, 255, 255, 0.1);
+}

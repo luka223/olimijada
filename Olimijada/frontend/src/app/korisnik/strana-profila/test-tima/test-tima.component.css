@@ -1,0 +1,97 @@
+img {
+	height: 100px;
+}
+
+#divSaSelectom {
+	width: 100%;
+	height: 38px;
+}
+
+@keyframes smanjiSelect {
+	0% {
+		width: 100%;
+	}
+	100% {
+		width: 48.5%;
+	}
+}
+
+.nijeIzabran {
+	width: 100%;
+}
+
+.izabranJe {
+	animation-name: smanjiSelect;
+	animation-duration: 1s;
+	animation-fill-mode: forwards;
+}
+
+@keyframes pojaviDrugiSelect {
+	0% {
+		display: none;
+	}
+	100% {
+		visibility: visible;
+		width: 48.5%;
+	}
+}
+
+.nijeIzabran2 {
+	display: none;
+	visibility: hidden;
+	width: 0%;
+}
+
+.izabranJe2 {
+	visibility: hidden;
+	width: 0%;
+	float: right;
+	animation-delay: 1s;
+	animation-name: pojaviDrugiSelect;
+	animation-duration: 1s;
+	animation-fill-mode: both;
+}
+
+.row {
+	margin: 0 !important;
+	display: flex;
+	align-items: center;
+}
+
+.scoreboard {
+	background-color: rgba(255, 255, 255, 0.2);
+	font-size: 20px;
+}
+
+.rezultat {
+	display: inline-block;
+	background-color: rgba(0, 0, 0, 0.2);
+	font-size: 36px;
+	margin-bottom: 5px;
+}
+
+.maliEkran {
+	display: none;
+}
+
+.velikiEkran {
+	display: block;
+}
+
+@media screen and (max-width: 575px) {
+	.scoreboard .col-auto {
+		margin: auto;
+	}
+	.prviGrb {
+		margin-bottom: 15px !important;
+	}
+	.drugiGrb {
+		margin-top: 15px !important;
+	}
+	.maliEkran {
+		display: block;
+	}
+	.velikiEkran {
+		display: none;
+	}
+}

@@ -1,0 +1,63 @@
+<script src='https://www.google.com/recaptcha/api.js'></script>
+
+<div *ngIf="successSignUp==false">
+	<form method="post" (submit)="registrujSe()">
+		<div>
+			<label for="username">{{"HOMEPAGE.LOGIN.USERNAME" | translate}}</label>
+			<br>
+			<img src="assets/images/account_icon.png" alt="slicica">
+			<input (change)="usernameCheckF()" id="username" class="textInput" type="text" name="username" [(ngModel)]="username" />
+		</div>
+
+		{{usernameCheck | translate}}
+
+		<div>
+			<label for="pwd">{{"HOMEPAGE.LOGIN.PASSWORD" | translate}}</label>
+			<br>
+			<img src="assets/images/password_icon.png" alt="slicica">
+			<input (change)="passwordCheckF()" id="pwd" class="textInput" type="password" name="password" [(ngModel)]="password" />
+		</div>
+
+		{{passwordCheck|translate}}
+		<div>
+			<label for="pwdConfirm">{{"HOMEPAGE.LOGIN.CONFIRM_PASSWORD" | translate}}</label>
+			<br>
+			<img src="assets/images/password_icon.png" alt="slicica">
+			<input (change)="passwordCheck1F()" id="pwdConfirm" class="textInput" type="password" name="password" [(ngModel)]="password1" />
+		</div>
+
+
+		{{samePass | translate}}
+
+		<div>
+			<label for="email">{{"HOMEPAGE.LOGIN.EMAIL" | translate}}</label>
+			<br>
+			<img src="assets/images/mail_icon.png" alt="slicica">
+			<input (change)="emailCheckF()" id="email" class="textInput" type="email" name="email" [(ngModel)]="email" />
+		</div>
+		{{emailCheck | translate}}
+		<br>
+
+		<span id="recaptcha">
+			<re-captcha theme="dark" (resolved)="resolved($event)" siteKey="6LdaBFsUAAAAALn9_imfzpIbfJa7H4IBXfPyeeyM"></re-captcha>
+		</span>
+		<br>
+		<p *ngIf="captchaFail">{{"CAPTCHA_FAIL" | translate}}</p>
+
+		<button class="button btn-outline-dark" type="submit">{{"HOMEPAGE.LOGIN.SIGN_UP" | translate}}</button>
+		<p>{{odgovor | translate}}</p>
+		<br>
+
+		<p>{{"HOMEPAGE.LOGIN.HAVE_ACCOUNT" | translate}}
+			<a [routerLink]="['']">{{"HOMEPAGE.LOGIN.SIGN_IN" | translate}}</a>
+		</p>
+	</form>
+</div>
+<div *ngIf="successSignUp==true">
+
+	<h4>{{"HOMEPAGE.CHECK_EMAIL"|translate}}</h4>
+	<button id="resend" (click)="resendMail()" type="button" class="button btn-outline-dark">
+		{{"HOMEPAGE.RESEND_EMAIL"|translate}}
+	</button>
+
+</div>

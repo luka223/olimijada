@@ -1,0 +1,80 @@
+#dodajTim {
+	margin-bottom: 10px;
+	float: right;
+}
+
+#grb {
+	display: block;
+	max-height: 150px;
+	margin: 10px auto;
+}
+
+.dropdown-menu option {
+	cursor: pointer;
+}
+
+input {
+	margin-bottom: 10px;
+}
+
+.dropdown button {
+	width: 40%;
+	float: left;
+}
+
+.dropdown-menu {
+	width: 40%;
+}
+
+/* #upload */
+
+.upload {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: dashed black 1px;
+	float: right;
+	margin-top: 10px;
+	width: 100%;
+	height: 300px;
+	opacity: 0.6;
+}
+
+#uploadSlika {
+	width: 10%;
+}
+
+#prikazUploada {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+label:hover {
+	opacity: 1;
+	cursor: pointer;
+}
+
+.modal-footer {
+	clear: both;
+}
+
+#centarUploada {
+	text-align: center;
+}
+
+#uploadText {
+	font-size: 9.5x;
+}
+
+option {
+	cursor: pointer;
+}
+
+.checkboxDiv input+span+i {
+	visibility: hidden;
+}
+
+.checkboxDiv input:checked+span+i {
+	visibility: visible;
+}

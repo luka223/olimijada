@@ -1,0 +1,175 @@
+<div class="p-3">
+	<h3 class="opis text-center">{{"GAMES" | translate}}</h3>
+	<button class="button btn-outline-dark" (click)="postaviFormuZaDodavanjeIgara()">{{"ADMIN_MENU.ADD_GAME"|translate}}</button>
+	<button class="button btn-outline-dark mb-2" (click)="postaviTabeleIgara()">{{"ADMIN_MENU.GAMES_LIST" | translate}}</button>
+	<div *ngIf="dodavanjeIgre == false; else formaZaDodavanje" class="table-responsive">
+		<table class="tabela tabela-hover table">
+			<thead>
+				<th>{{"ADMIN_PAGE.GAME_NAME" | translate}}</th>
+				<th></th>
+				<th></th>
+			</thead>
+			<tbody *ngIf="sveIgre?.length > 0">
+				<tr *ngFor="let igra of sveIgre">
+					<td>{{igra.naziv}}</td>
+					<td>
+						<button type="button" class="close" aria-label="Close" (click)="izaberiIgruZaIzmenu(igra.ID)">
+							<img height="30px" src='assets/images/edit.png'>
+						</button>
+					</td>
+					<td>
+						<button type="button" class="close" aria-label="Close" (click)="obrisiIgru(igra.ID)">
+							<img height="30px" src='assets/images/if_25_2135797.png'>
+						</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div id="porukaOBrisanjuIgre" class="alert alert-dismissible collapse mt-2" style="display: none;">
+			<button type="button" class="close" (click)="sakrijAlert('porukaOBrisanjuIgre');">&times;</button>
+			{{porurkaOBrisanjuIgre | translate}}
+		</div>
+	</div>
+	<ng-template #formaZaDodavanje>
+		<app-dodavanje-igre></app-dodavanje-igre>
+	</ng-template>
+
+
+
+	<div id="modal za izmenu igre">
+		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">New message</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="form-group">
+								<label for="recipient-name" class="col-form-label">Recipient:</label>
+								<input type="text" class="form-control" id="recipient-name">
+							</div>
+							<div class="form-group">
+								<label for="message-text" class="col-form-label">Message:</label>
+								<textarea class="form-control" id="message-text"></textarea>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary">Send message</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<form #frm="ngForm" *ngIf="izabranaIgra != null" id="azuriranjeIgre" (submit)="azurirajIgru(frm)">
+		<h1 class="opis text-center">{{"ADMIN_PAGE.UPDATE_GAME" | translate}}</h1>
+		<div class="row">
+			<div class="col-sm">
+				<div class="form-group">
+					<label for="naziv" class=" control-label"> {{"ADMIN_PAGE.GAME_NAME" | translate}}</label>
+					<div>
+						<input type="text" class="form-control" [(ngModel)]="izabranaIgra.naziv" name="naziv" id="naziv" required>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="minBrojTimova" class=" control-label"> {{"ADMIN_PAGE.MIN_TEAMS" | translate}}</label>
+					<div>
+						<input type="number" class="form-control" [(ngModel)]="izabranaIgra.minBrojTimovaUMecu" name="minBrojTimova" id="minBrojTimova"
+						 required>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="maxBrojTimova" class=" control-label"> {{"ADMIN_PAGE.MAX_TEAMS" | translate}}</label>
+					<div>
+						<input type="number" class="form-control" [(ngModel)]="izabranaIgra.maxBrojTimovaUMecu" name="maxBrojTimova" id="maxBrojTimova"
+						 required>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="opis" class=" control-label"> {{"ADMIN_PAGE.DESCRIPTION_SR" | translate}}</label>
+					<div>
+						<textarea rows="4" cols="50" class="form-control" [(ngModel)]="izabranaIgra.opis" name="opis" id="opis" required></textarea>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="description" class=" control-label"> {{"ADMIN_PAGE.DESCRIPTION_EN" | translate}}</label>
+					<div>
+						<textarea rows="4" cols="50" class="form-control" [(ngModel)]="izabranaIgra.description" name="description" id="description"
+						 required></textarea>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="minBrojIgraca" class=" control-label"> {{"ADMIN_PAGE.MIN_PLAYERS" | translate}} (*)</label>
+					<div>
+						<input type="number" class="form-control" [(ngModel)]="izabranaIgra.minBrojIgracaUTimu" name="minBrojIgraca" id="minBrojIgraca"
+						 required>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="maxBrojIgraca" class=" control-label"> {{"ADMIN_PAGE.MAX_PLAYERS" | translate}} (*)</label>
+					<div>
+						<input type="number" class="form-control" [(ngModel)]="izabranaIgra.maxBrojIgracaUTimu" name="maxBrojIgraca" id="maxBrojIgraca"
+						 required>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm">
+				<div>
+					<p id="uploadText">{{"ADMIN_PAGE.IMG_UPLOAD" | translate}}</p>
+					<img id="uploadSlika" src="{{uploadSlika}}" style="height: 150px;" />
+					<br><br>
+					<input #uploadSlikeInput type="file" name="myPhoto" (change)="prikaziUploadovanuSliku($event)"/>
+				</div>
+
+				<div>
+					<br>
+					<p id="uploadIkonaText">{{"ADMIN_PAGE.ICON_UPLOAD" | translate}}</p>
+					<img id="uploadIkona" src="{{uploadIkona}}" style="height: 100px;" />
+					<br><br>
+					<input id="uploadIkone" type="file" name="myPhoto" (change)="prikaziUploadovanuIkonu($event)"/>
+				</div>
+
+				<div>
+					<br>
+					<p id="uploadPozadinaText">{{"ADMIN_PAGE.BACK_UPLOAD" | translate}}</p>
+					<img id="uploadPozadina" src="{{uploadPozadina}}" style="height: 150px;" />
+					<br><br>
+					<input id="uploadPozadine" type="file" name="myPhoto" (change)="prikaziUploadovanuPozadinu($event)"/>
+				</div>
+			</div>
+
+		</div>
+		<div class="row mx-auto">
+			<div class="form-group" style="width: 100%;">
+				<div class="flex-align" style="width: 100%;">
+					<button type="submit" id="prijavi" name="prijavi" class="button btn-outline-dark">{{"UPDATE" | translate}}</button>
+					<button id="ponisti" name="ponisti" class="button btn-outline-dark" (click)="ponistiIzmene()">{{"CANCEL" | translate}}</button>
+					<div id="porukaOAzuriranjuIgre" class="alert alert-dismissible collapse mt-2" style="display: none;">
+						<button type="button" class="close" (click)="sakrijAlert('porukaOAzuriranjuIgre');">&times;</button>
+						{{porukaOAzuriranjuIgre | translate}}
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	<div id="porukaOUspesnomAzuriranjuIgre" class="alert alert-dismissible collapse mt-2" style="display: none;">
+		<button type="button" class="close" (click)="sakrijAlert('porukaOUspesnomAzuriranjuIgre');">&times;</button>
+		{{porukaOAzuriranjuIgre | translate}}
+	</div>
+
+
+</div>

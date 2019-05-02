@@ -1,0 +1,129 @@
+<div *ngIf="gledaSvojProfil; else greska">
+	<button id="dodajBota" class="button btn-outline-dark" data-toggle="modal" data-target="#FormNoviBot">{{"PROFILE_PAGE.ADD_BOT" | translate}}</button>
+	<div class="table-responsive">
+		<table class="tabela tabela-hover table " >
+			<thead>
+				<th>Bot</th>
+				<th>{{"RANK_POINTS" | translate}}</th>
+				<th></th>
+				
+				
+			</thead>
+			<tbody *ngIf="botovi.length!=0">
+				<tr *ngFor="let bot of botovi">
+					<td (click)="otvoriPopup(bot)" style="width: 75%">{{bot.naziv}}</td>
+					<td (click)="otvoriPopup(bot)">{{bot.rankPoeni}}</td>
+					<td>
+						<button type="button" class="close" aria-label="Close" (click)="otvoriPopupZaBrisanjeBota(bot.ID)">
+							<img width="40px" height="30px" src='../../../../assets/images/if_25_2135797.png'>
+						</button>
+					</td>
+				</tr>
+			</tbody>
+			<tbody *ngIf="botovi.length==0">
+				<tr style="width: 100%">
+					<td class="text-center" colspan="3">{{"PROFILE_PAGE.NO_BOTS"|translate}}</td>
+				
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div id="porukaOBrisanjuBota" class="alert alert-dismissible collapse" style="display: none;">
+		<button type="button" class="close" (click)="sakrijAlert('porukaOBrisanjuBota');">&times;</button>
+		{{porukaOBrisanjuBota | translate}}
+	</div>
+
+	<div class="modal fade" id="modalBrisanjeBota" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					{{"PROFILE_PAGE.DELETE_BOT_HEADER" | translate}}
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					{{"PROFILE_PAGE.DELETE_BOT" | translate}}
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal" (click)="obrisiBota()">{{"YES" | translate}}</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">{{"CLOSE" | translate}}</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<!-- Modal za dodavanje novog bota -->
+	<div id="FormNoviBot" class="modal fade" role="dialog" data-backdrop="static">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">{{'PROFILE_PAGE.NEW_BOT' | translate}}</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="ocistiModalZaDodavanjeBota()">&times;</button>
+				</div>
+				<form method="post" (submit)="dodajBota()">
+					<div class="modal-body">
+						<input type="text" name="nazivNovogBota" class="form-control" placeholder="{{'PROFILE_PAGE.BOT_NAME' | translate}}" [(ngModel)]="nazivNovogBota">
+						<!--<label for="file">-->
+							<button class="button mt-3" type="button" (click)="fajlBota.click()">{{"PROFILE_PAGE.CHOOSE_FILE" | translate}}</button>
+						<!--</label>-->
+						<input #fajlBota id="fajlBota" type="file" (change)="promeniFajl($event)" style="display: none" accept=".txt" multiple />
+						<p *ngIf="uploadovaniBot">{{uploadovaniBot.name}}</p>
+						<select id="dropdownIgra" class="custom-select">
+							<option style="display: none;" value="-1" selected>{{"PROFILE_PAGE.SELECT_GAME" | translate}}</option>
+							<option *ngFor="let igra of igre" class="dropdown-item" value="{{igra.ID}}">{{igra.naziv}}</option>
+						</select>
+						<div id="porukaODodavanjuBota" class="mt-2 alert alert-dismissible collapse" style="display: none;">
+							<button type="button" class="close" (click)="sakrijAlert('porukaODodavanjuBota');">&times;</button>
+							{{porukaODodavanjuBota | translate}}
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="button btn-outline-dark">{{"PROFILE_PAGE.ADD_BOT" | translate}}</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal koji sadrzi kod -->
+	<div id="FormBot" class="modal fade" role="dialog" data-backdrop="false">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 *ngIf="kliknutiBot" class="modal-title">Naziv bota: {{kliknutiBot.naziv}}</h4>
+					<button type="button" class="close closefirstmodal" (click)="zatvoriPopup()">&times;</button>
+				</div>
+				<div class="modal-body">
+					<div id="editor" ace-editor [(text)]="unetiKod" [theme]="'dracula'" [mode]="ekstenzija">{{unetiKod}}</div>
+					<div id="porukaOAzuriranjuFajlaBota" class="mt-2 alert alert-dismissible collapse" style="display: none;">
+						<button type="button" class="close" (click)="sakrijAlert('porukaOAzuriranjuFajlaBota');">&times;</button>
+						{{porukaOAzuriranjuFajlaBota | translate}}
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="button btn-outline-dark" (click)="sacuvajFajl()">{{"SAVE" | translate}}</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal sa porukom upozorenja pre gasenja sa nesacuvanim izmenama -->
+	<div id="Warning" class="modal fade" role="dialog" data-backdrop="static">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-body">
+					<p style="color: white;">{{"PROFILE_PAGE.UNSAVED_CHANGES" | translate}}</p>
+					<button type="button" class="btn btn-danger" (click)="zatvoriWarning()">{{"YES" | translate }}</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">{{"NO" | translate }}</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<ng-template #greska>
+	<h2>{{"PROFILE_PAGE.ERROR.CAN_NOT_ACCESS" | translate}}</h2>
+</ng-template>

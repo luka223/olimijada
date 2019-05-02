@@ -1,0 +1,42 @@
+form {
+	position: absolute;
+	top: 10%;
+	left: 0;
+	right: 0;
+}
+
+.backgroundDiv2 {
+	background-image: url('/assets/images/background.png');
+	background-size: cover;
+
+	position: fixed;
+	height: 100%;
+	width: 100%;
+
+	top: 0px;
+	left: 0px;
+	z-index: -1;
+}
+
+.textInput {
+	padding-left: 30px;
+}
+
+label {
+	margin-top: 20px;
+}
+
+label {
+	text-align: left;
+}
+
+.button {
+	margin-top: 30px;
+	width: 100px;
+}
+
+img {
+	height: 60px;
+	position: relative;
+	left: 30px;
+}

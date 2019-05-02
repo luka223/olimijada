@@ -1,0 +1,125 @@
+<div class="d-block w-100 p-4" style="text-align: center">
+	<h1 class="opis">Olimijada</h1>
+</div>
+<app-slajder></app-slajder>
+<div class="container-fluid clearfix">
+	<div id="statistika" class="row">
+		<div id="tabelaNajboljihBotova" class="col">
+			<div class="row mb-2">
+				<div class="col-auto">
+					<img src="../assets/images/trophy.png">
+				</div>
+				<div class="col">
+					<p class="opis m-0" style="text-align: right;">{{ "HOMEPAGE.CHECK_OUT_BOTS" | translate | uppercase}}</p>
+				</div>
+			</div>
+			<h3 class="naslovTabele">{{ "HOMEPAGE.NAJBOLJI_BOTOVI" | translate}}</h3>
+			<div class="table-responsive">
+				<table class="tabela table">
+					<thead>
+						<th>{{ "HOMEPAGE.BOT.NAZIV" | translate}}</th>
+						<th>{{ "HOMEPAGE.BOT.POENI" | translate}}</th>
+					</thead>
+					<tbody>
+						<tr *ngFor="let bot of botovi">
+							<td>{{bot.naziv}}</td>
+							<td>{{bot.rankPoeni}}</td>
+						</tr>
+						<tr class="bezHovera" *ngIf="botovi?.length == 0">
+							<td class="text-center" colspan="2">{{"NO_BOTS" | translate}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div id="turniriNajava" class="col">
+			<div class="row mb-2">
+				<div class="col-auto">
+					<img src="../assets/images/stop-watch.png">
+				</div>
+				<div class="col">
+					<p class="opis m-0" style="text-align: right;">{{ "HOMEPAGE.APPLY_ON_TIME" | translate | uppercase}}</p>
+				</div>
+			</div>
+			<app-prijava-na-turnir></app-prijava-na-turnir>
+
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<div class="row mb-2">
+				<div class="col-auto">
+					<img src="../assets/images/check.png">
+				</div>
+				<div class="col">
+					<p class="opis" style="text-align: right; ">{{ "PROFILE_PAGE.TOURNAMENT.CHECK_YOUR_TOURNAMENTS" | translate | uppercase}}</p>
+				</div>
+			</div>
+		
+			<h3 class="naslovTabele">{{"PROFILE_PAGE.TOURNAMENT.PARTICIPATING" | translate}}</h3>
+			<div class="table-responsive">
+				<table class="tabela tabela-hover table">
+					<thead>
+						<th>{{"PROFILE_PAGE.TOURNAMENT.TOUR_NAME" | translate}}</th>
+						<th>{{"PROFILE_PAGE.TOURNAMENT.DATE_START" | translate}}</th>
+						<th>{{"GAME_PAGE.TOURNAMENT.FINISHED" | translate}}</th>
+						<th>{{"TEAM" | translate }}</th>
+					</thead>
+					<tbody>
+						<tr *ngFor="let turnir of prijavljeniTurniri" [routerLink]="['/turnir/', turnir.ID]">
+							<td>{{turnir.naziv}}</td>
+							<td>{{turnir.datumPocetka | date: 'dd.MM.yyyy HH:mm' }}</td>
+							<td *ngIf="turnir.zavrsen">{{"YES" | translate}}</td>
+							<td *ngIf="!turnir.zavrsen">{{"NO" | translate}}</td>
+							<td>{{turnir.tim.nazivTima}}</td>
+						</tr>
+						<tr class="bezHovera" *ngIf="prijavljeniTurniri?.length == 0" class="text-center">
+							
+							<td class="text-center" colspan="5">{{"GAME_PAGE.NO_TURNIRS" | translate}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="col">
+			<div class="row  mb-2">
+				<div class="col-auto">
+					<img src="../assets/images/match.png">
+				</div>
+				<div class="col">
+					<p class="opis" style="text-align: right; ">{{ "HOMEPAGE.CHECK_YOUR_MATCHES" | translate | uppercase}}</p>
+				</div>
+			</div>
+
+			<h3 class="naslovTabele">{{"HOMEPAGE.YOUR_MATCHES" | translate}}</h3>
+			<div class="table-responsive">
+				<table class="tabela tabela-hover table">
+					<thead>
+						<th>{{"GAME_PAGE.HOME_TEAM" | translate}}</th>
+						<th>{{"GAME_PAGE.AWAY_TEAM" | translate}}</th>
+						<th>{{"GAME_PAGE.SCORE" | translate}}</th>
+						<th>{{"GAME_PAGE.START_TIME" | translate}}</th>
+						<th></th>
+					</thead>
+					<tbody>
+						<tr *ngFor="let item of posledjiMecevi">
+							<td>{{item.nazivTima1}}</td>
+							<td>{{item.nazivTima2}}</td>
+							<td *ngIf="!item.zavrsen">-</td>
+							<td *ngIf="item.zavrsen">{{item.poeniTima1}}:{{item.poeniTima2}}</td>
+							<td>{{item.pocetakMeca | date: 'dd.MM.yyyy HH:mm'}}</td>
+							<td>
+								<button class="button buttonDark btn-outline-dark" [routerLink]="['/mec', item._id ]" target="_blank">{{"GAME_PAGE.SEE_GAME" | translate}}</button>
+							</td>
+						</tr>
+						<tr class="bezHovera" *ngIf="posledjiMecevi?.length == 0">
+							<td class="text-center" colspan="5">{{"NO_MATCHES" | translate}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<app-footer></app-footer>

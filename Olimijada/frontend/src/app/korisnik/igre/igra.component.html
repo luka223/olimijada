@@ -1,0 +1,218 @@
+<div *ngIf="slikaIgre">
+	<img src="{{slikaIgre}}" style="width: 100%">
+</div>
+<div *ngIf="postoji" class="container clearfix w-100">
+	<div class=" p-2 w-100">
+		<h1 class="text-center opis">{{igra.naziv}}</h1>
+		<p *ngIf="!jezikEn" class="text-justify">{{igra.opis}}</p>
+		<p *ngIf="jezikEn" class="text-justify">{{igra.description}}</p>
+	</div>
+	<div class="w-100">
+		<div *ngIf="isLogged">
+			
+			<button id="dodajBota" class="button btn-outline-dark" data-toggle="modal" data-target="#FormNoviBot">{{"PROFILE_PAGE.ADD_BOT" | translate}}</button>
+			<button id="dodajTim" class="button btn-outline-dark mb-3" (click)="otvoriPopupNoviTim()">{{"PROFILE_PAGE.ADD_TEAM" | translate}}</button>
+		</div>
+
+		<h3 class="naslovTabele">{{"GAME_PAGE.MATCHES" | translate}}</h3>
+		<div class="table-responsive">
+			<table class="tabela table">
+				<thead>
+					<th>{{"GAME_PAGE.HOME_TEAM" | translate}}</th>
+					<th>{{"GAME_PAGE.AWAY_TEAM" | translate}}</th>
+					<!--<th>{{"GAME_PAGE.HOME_SCORE" | translate}}</th>
+							<th>{{"GAME_PAGE.AWAY_SCORE" | translate}}</th>-->
+					<th>{{"GAME_PAGE.SCORE" | translate}}</th>
+					<th>{{"GAME_PAGE.START_TIME" | translate}}</th>
+					<th> </th>
+				</thead>
+				<tbody>
+					<tr *ngFor="let item of mecevi">
+						<td>{{item.nazivTima1}}</td>
+						<td>{{item.nazivTima2}}</td>
+						<td *ngIf="!item.zavrsen">-</td>
+						<td *ngIf="item.zavrsen">{{item.poeniTima1}} : {{item.poeniTima2}}</td>
+						<td>{{item.pocetakMeca | date: 'dd.MM.yyyy HH:mm'}}</td>
+						<td>
+							<a class="btn" routerLink="/mec/{{item._id}}" target="_blank">{{"GAME_PAGE.SEE_GAME" | translate}}</a>
+						</td>
+					</tr>
+					<tr *ngIf="mecevi?.length == 0">
+						<td class="text-center" colspan="5">{{"GAME_PAGE.NO_MATCHES" | translate}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<router-outlet></router-outlet>
+	</div>
+
+	<div class="row" style="border: none;">
+		<div class="col m-2 p-2 w-50 center">
+			<h3 class="naslovTabele">{{"GAME_PAGE.BESTTEAMS" | translate}}</h3>
+			<div *ngIf="najboljiTimovi.length > 0">
+				<div class="table-responsive">
+					<table class="tabela table">
+						<thead>
+							<th>{{"GAME_PAGE.TEAMBOT" | translate}}</th>
+							<th>{{"GAME_PAGE.POINTS" | translate}}</th>
+						</thead>
+						<tbody *ngIf="najboljiTimovi.length!=0">
+							<tr *ngFor="let item of najboljiTimovi">
+								<td> {{item.naziv}} </td>
+								<td> {{item.ukupnoPoena}} </td>
+							</tr>
+						</tbody>
+						
+						<tbody *ngIf="najboljiTimovi.length==0">
+								<tr>
+									<td class="text-center" colspan="2">{{"GAME_PAGE.NO_TEAMS" | translate}}</td>
+									
+								</tr>
+	
+							</tbody>
+
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="col m-2 p-2 w-50 center">
+			<div *ngIf="isLogged">
+				<div>
+					<h3 class="naslovTabele">{{"GAME_PAGE.MYBESTTEAMS" | translate}}</h3>
+					<div >
+						<div class="table-responsive">
+							<table class="tabela table">
+								<thead>
+									<th>{{"GAME_PAGE.TEAMBOT" | translate}}</th>
+									<th>{{"GAME_PAGE.POINTS" | translate}}</th>
+								</thead>
+								<tbody *ngIf="mojiNajboljiTimovi.length!=0" >
+									<tr *ngFor="let item of mojiNajboljiTimovi">
+										<td> {{item.naziv}} </td>
+										<td> {{item.ukupnoPoena}} </td>
+									</tr>
+								</tbody>
+								<tbody *ngIf="mojiNajboljiTimovi.length==0" >
+										<tr >
+											<td class="text-center" colspan="2">{{"GAME_PAGE.NO_TEAMS"| translate}}</td>
+											
+										</tr>
+									</tbody>
+									
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="w-100">
+		<h3 class="naslovTabele w-100">{{"GAME_PAGE.TOURNAMENTS" | translate}}</h3>
+		<div >
+			<div class="table-responsive">
+				<table class="tabela table w-100">
+					<thead class="w-100">
+						<th>{{"GAME_PAGE.TOURNAMENT.NAME" | translate}}</th>
+						<th>{{"GAME_PAGE.STATUS" | translate}}</th>
+						<th></th>
+					</thead>
+					<tbody class="w-100" *ngIf="turniri.length!=0">
+						<tr *ngFor="let item of turniri">
+							<td>{{item.naziv}}</td>
+							<td>{{item.status | translate}}</td>
+							<td>
+								<a class="btn" routerLink="/turnir/{{item.ID}}">{{"GAME_PAGE.TOURNAMENT.PAGE" | translate}}</a>
+							</td>
+						</tr>
+					</tbody>
+					<tbody class="w-100" *ngIf="turniri.length==0">
+						<tr >
+							<td class="text-center" colspan="3">{{"GAME_PAGE.NO_TURNIRS" | translate}}</td>
+							 
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<!-- Modal za novi tim -->
+<div class="modal fade" id="FormDodajTim" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+ data-backdrop="static">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">{{"PROFILE_PAGE.NEW_TEAM" | translate}}</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="ocistiModalZaDodavanjeTima()">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form (submit)="dodajTim()" method="post">
+				<div class="modal-body">
+					<input id="nazivTima" class="form-control w-100" type="text" name="nazivTima" placeholder="{{'PROFILE_PAGE.TEAM_NAME' | translate}}"
+					 [(ngModel)]="nazivNovogTima" />
+					<label class='upload' for="uploadSlike">
+						<div id="centarUploada">
+							<img id="uploadSlika" src="{{uploadSlika}}" />
+							<p id="uploadText">{{"PROFILE_PAGE.UPLOAD_TEAM_PHOTO" | translate}}</p>
+						</div>
+					</label>
+					<input id="uploadSlike" type="file" name="myPhoto" (change)="prikaziUploadovanuSliku()" style="display: none;" accept="image/png, image/jpeg"
+					/>
+					<p *ngIf="igra">{{"PROFILE_PAGE.CHOOSE_BOTS" | translate}} {{igra.minBrojIgracaUTimu}} {{"AND" | translate}} {{igra.maxBrojIgracaUTimu}}</p>
+					<div *ngIf="botoviIgre">
+						<div class="checkboxDiv" *ngFor="let bot of botoviIgre">
+							<label [attr.for]="'bot' + bot.ID">
+								<input (change)="selektovanjeBotaZaNoviTim(bot.ID)" [attr.id]="'bot' + bot.ID" class="botoviZaNoviTim" type="checkbox" [attr.value]="bot.ID" style="display: none;">
+								<span>{{bot.naziv}}</span>
+								<i class="fas fa-check"></i>
+							</label>
+						</div>
+					</div>
+					<div id="porukaODodavanjuTima" class="mt-2 alert alert-dismissible collapse" style="display: none;">
+						<button type="button" class="close" (click)="sakrijAlert('porukaODodavanjuTima');">&times;</button>
+						{{porukaODodavanjuTima | translate}}
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-secondary">{{"PROFILE_PAGE.ADD_TEAM" | translate}}</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- Modal za dodavanje novog bota -->
+<div id="FormNoviBot" class="modal fade" role="dialog" data-backdrop="static">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">{{'PROFILE_PAGE.NEW_BOT' | translate}}</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="ocistiModalZaDodavanjeBota()">&times;</button>
+			</div>
+			<form method="post" (submit)="dodajBota()">
+				<div class="modal-body">
+					<input type="text" name="nazivNovogBota" class="form-control" placeholder="{{'PROFILE_PAGE.BOT_NAME' | translate}}" [(ngModel)]="nazivNovogBota">
+					<label for="file">
+						<button class="button btn-outline-dark mt-3" type="button" (click)="fajlBota.click()">{{"PROFILE_PAGE.CHOOSE_FILE" | translate}}</button>
+					</label>
+					<input id="file" class="button" type="file" (change)="promeniFajl($event)" style="display: none" #fajlBota accept=".txt">
+					<p *ngIf="uploadovaniBot">{{uploadovaniBot.name}}</p>
+					<div id="porukaODodavanjuBota" class="mt-2 alert alert-dismissible collapse" style="display: none;">
+						<button type="button" class="close" (click)="sakrijAlert('porukaODodavanjuBota');">&times;</button>
+						{{porukaODodavanjuBota | translate}}
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="button btn-outline-dark">{{"PROFILE_PAGE.ADD_BOT" | translate}}</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<app-footer></app-footer>

@@ -1,0 +1,8 @@
+input, button {
+	max-width: 300px;
+	margin: 5px auto;
+}
+
+form {
+	margin-top: 20px;
+}
